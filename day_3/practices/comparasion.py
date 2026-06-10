@@ -1,0 +1,77 @@
+print("1. EQUAL TO OPERATOR (==)")
+print(5 == 5)
+print(10 == 20)
+print("Python" == "python")
+print("Apple" == "Apple")
+print(4 == 4.0)
+print(True == False)
+print([] == "")
+print((2 * 3) == (10 - 4))
+
+print("2. NOT EQUAL TO OPERATOR (!=)")
+print(5 != 10)
+print(7 != 7)
+print("Admin" != "admin")
+print(5.5 != 5)
+role = "Guest"
+print(role != "Admin")
+print(True != False)
+status_code = 404
+print(status_code != 200)
+print("10" != 10)
+print((12 / 3) != 4)
+
+print("3. GREATER THAN OPERATOR (>)")
+print(10 > 5)
+print(3 > 8)
+print(5 > 5)
+print(10.01 > 10.0)
+print("banana" > "apple")
+age = 21
+print(age > 18)
+print(-1 > -5)
+print(len("Python") > 3)
+print((50 - 20) > 40)
+print(len([1, 2, 3]) > len([1]))
+
+print("4. LESS THAN OPERATOR (<)")
+print(2 < 7)
+print(15 < 6)
+print(9 < 9)
+print(0.5 < 0.75)
+print(-10 < -2)
+print("cat" < "dog")
+current_temp = 15
+print(current_temp < 32)
+print(len([]) < 1)
+print((1 / 4) < (1 / 2))
+print(-0.1 < 0)
+
+print("5. GREATER THAN OR EQUAL TO OPERATOR (>=)")
+print(12 >= 8)
+print(15 >= 15)
+print(4 >= 9)
+user_age = 18
+print(user_age >= 18)
+stock = 5
+print(stock >= 5)
+print(0 >= -1)
+print(7.5 >= 7.5)
+print("zebra" >= "zebra")
+print((5 * 5) >= 25)
+print(len(["a", "b"]) >= 2)
+
+print("6. LESS THAN OR EQUAL TO OPERATOR (<=)")
+print(3 <= 10)
+print(22 <= 22)
+print(50 <= 30)
+speed = 60
+print(speed <= 60)
+budget = 45.50
+print(budget <= 50.00)
+print("apple" <= "apricot")
+temp = -2
+print(temp <= 0)
+print(len("") <= 0)
+print((100 / 4) <= 25)
+print(0.001 <= 0.01)
