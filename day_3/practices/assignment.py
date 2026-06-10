@@ -1,230 +1,324 @@
-age = 25
-price = 19.99
-name = "Alice"
-is_active = True
-fruits = ["apple", "banana"]
-user = {"id": 1, "role": "admin"}
-coordinates = (40.7128, -74.0060)
-original = 100
-copy_var = original
-x, y, z = 1, 2, 3
-score1 = score2 = score3 = 0
+print("\nBasic Assignment")
 
+age = 25
+print(age)
+
+price = 19.99
+print(price)
+
+name = "Alice"
+print(name)
+
+is_active = True
+print(is_active)
+
+fruits = ["apple", "banana"]
+print(fruits)
+
+user = {"id": 1, "role": "admin"}
+print(user)
+
+coordinates = (40.7128, -74.0060)
+print(coordinates)
+
+original = 100
+print(original)
+
+copy_var = original
+print(copy_var)
+
+x, y, z = 1, 2, 3
+print(x, y, z)
+
+score1 = score2 = score3 = 0
+print(score1, score2, score3)
+
+print("\nAddition Assignment")
 
 count = 0
-count += 1  # count is now 1
+count += 1
+print(count)
 
 cart_total = 50.0
-cart_total += 15.5  # cart_total is now 65.5
+cart_total += 15.5
+print(cart_total)
 
 greeting = "Hello"
-greeting += " World"  # greeting is now "Hello World"
+greeting += " World"
+print(greeting)
 
 numbers = [1, 2]
-numbers += [3, 4]  # numbers is now [1, 2, 3, 4]
+numbers += [3, 4]
+print(numbers)
 
 index = 10
-index += 2  # index is now 12
+index += 2
+print(index)
 
 score = 1500
-score += 500  # score is now 2000
+score += 500
+print(score)
 
 temperature = -5
-temperature += 8  # temperature is now 3
+temperature += 8
+print(temperature)
 
-items = (1, 2)
-items += (3,)  # items is now (1, 2, 3)
+items_tuple = (1, 2)
+items_tuple += (3,)
+print(items_tuple)
 
 progress = 0.25
-progress += 0.15  # progress is now 0.40
+progress += 0.15
+print(progress)
 
 seconds = 45
-seconds += 15  # seconds is now 60
+seconds += 15
+print(seconds)
 
+print("\nSubstract Assignment")
 
 countdown = 10
-countdown -= 1  # countdown is now 9
+countdown -= 1
+print(countdown)
 
 balance = 100
-balance -= 20  # balance is now 80
+balance -= 20
+print(balance)
 
 health = 100
-health -= 15  # health is now 85
+health -= 15
+print(health)
 
 stock = 50
-stock -= 5  # stock is now 45
+stock -= 5
+print(stock)
 
 room_temp = 22.5
-room_temp -= 3.5  # room_temp is now 19.0
+room_temp -= 3.5
+print(room_temp)
 
 ticket_price = 15
-ticket_price -= 3  # ticket_price is now 12
+ticket_price -= 3
+print(ticket_price)
 
 capacity = 250
-capacity -= 45  # capacity is now 205
+capacity -= 45
+print(capacity)
 
 current_page = 5
-current_page -= 1  # current_page is now 4
+current_page -= 1
+print(current_page)
 
 margin = 0.05
-margin -= 0.01  # margin is now 0.04
+margin -= 0.01
+print(margin)
 
 altitude = 10
-altitude -= -5  # altitude is now 15
+altitude -= -5
+print(altitude)
 
+print("\nMultiplication Assignment")
 
 factor = 5
-factor *= 2  # factor is now 10
+factor *= 2
+print(factor)
 
 width = 12.5
-width *= 4  # width is now 50.0
+width *= 4
+print(width)
 
 alert = "Run!"
-alert *= 3  # alert is now "Run!Run!Run!"
+alert *= 3
+print(alert)
 
 pattern = [0]
-pattern *= 5  # pattern is now [0, 0, 0, 0, 0]
+pattern *= 5
+print(pattern)
 
 investment = 1000
-investment *= 1.10  # investment is now 1100.0
+investment *= 1.10
+print(investment)
 
 servings = 3
-servings *= 3  # servings is now 9
+servings *= 3
+print(servings)
 
 factorial_step = 6
-factorial_step *= 4  # factorial_step is now 24
+factorial_step *= 4
+print(factorial_step)
 
 base_damage = 40
-base_damage *= 1.5  # base_damage is now 60.0
+base_damage *= 1.5
+print(base_damage)
 
 bits = (1, 0)
-bits *= 2  # bits is now (1, 0, 1, 0)
+bits *= 2
+print(bits)
 
 zoom = 1
-zoom *= 0.5  # zoom is now 0.5
+zoom *= 0.5
+print(zoom)
+
+print("\nDivision Assignment")
 
 total = 20
-total /= 2  # total is now 10.0
+total /= 2
+print(total)
 
 distance = 100
-distance /= 2.5  # distance is now 40.0
+distance /= 2.5
+print(distance)
 
 group_bill = 120
-group_bill /= 4  # group_bill is now 30.0
+group_bill /= 4
+print(group_bill)
 
 height = 1080
-height /= 2  # height is now 540.0
+height /= 2
+print(height)
 
 sum_values = 45
-sum_values /= 5  # sum_values is now 9.0
+sum_values /= 5
+print(sum_values)
 
 rate = 75
-rate /= 100  # rate is now 0.75
+rate /= 100
+print(rate)
 
 game_speed = 4
-game_speed /= 4  # game_speed is now 1.0
+game_speed /= 4
+print(game_speed)
 
 min_threshold = -50
-min_threshold /= 2  # min_threshold is now -25.0
+min_threshold /= 2
+print(min_threshold)
 
 frequency = 1000
-frequency /= 10  # frequency is now 100.0
+frequency /= 10
+print(frequency)
 
 load = 15.5
-load /= 2  # load is now 7.75
+load /= 2
+print(load)
 
-items = 11
-items //= 3  # items is now 3
+
+print("\nFloor Assignment")
+
+items_count = 11
+items_count //= 3
+print(items_count)
 
 total_pixels = 55
-total_pixels //= 10  # total_pixels is now 5
+total_pixels //= 10
+print(total_pixels)
 
 loose_cans = 25
-loose_cans //= 6  # loose_cans is now 4
+loose_cans //= 6
+print(loose_cans)
 
 length = 10.5
-length //= 2  # length is now 5.0
+length //= 2
+print(length)
 
 players = 23
-players //= 5  # players is now 4
+players //= 5
+print(players)
 
 minutes = 135
-minutes //= 60  # minutes is now 2
+minutes //= 60
+print(minutes)
 
 days = 40
-days //= 7  # days is now 5
+days //= 7
+print(days)
 
 grid_index = 102
-grid_index //= 10  # grid_index is now 10
+grid_index //= 10
+print(grid_index)
 
 coordinate = -11
-coordinate //= 3  # coordinate is now -4 (rounds away from zero)
+coordinate //= 3
+print(coordinate)
 
 tasks = 100
-tasks //= 30  # tasks is now 3
+tasks //= 30
+print(tasks)
 
+print("\nModulo Assignment")
 number = 15
-number %= 2  # number is now 1
+number %= 2
+print(number)
 
 rotation = 380
-rotation %= 360  # rotation is now 20
+rotation %= 360
+print(rotation)
 
 time_left = 125
-time_left %= 60  # time_left is now 5
+time_left %= 60
+print(time_left)
 
 cents = 73
-cents %= 25  # cents is now 23
+cents %= 25
+print(cents)
 
 pointer = 12
-pointer %= 10  # pointer is now 2
+pointer %= 10
+print(pointer)
 
 leftovers = 17
-leftovers %= 4  # leftovers is now 1
+leftovers %= 4
+print(leftovers)
 
 position = 53
-position %= 10  # position is now 3
-
+position %= 10
+print(position)
 
 year_check = 2026
-year_check %= 4  # year_check is now 2
-
+year_check %= 4
+print(year_check)
 
 phase = 7
-phase %= 3  # phase is now 1
-
+phase %= 3
+print(phase)
 
 gap = 5.5
-gap %= 2  # gap is now 1.5
+gap %= 2
+print(gap)
 
+print("\nExponentiation Assignment")
 
-base = 4
-base **= 2  # base is now 16
+base_num = 4
+base_num **= 2
+print(base_num)
 
 cube_target = 3
-cube_target **= 3  # cube_target is now 27
+cube_target **= 3
+print(cube_target)
 
 binary_base = 2
-binary_base **= 8  # binary_base is now 256
-
-binary_base = 2
-binary_base **= 8  # binary_base is now 256
-
+binary_base **= 8
+print(binary_base)
 
 size = 5
-size **= 4  # size is now 625
+size **= 4
+print(size)
 
 scalar = 10
-scalar **= 3  # scalar is now 1000
+scalar **= 3
+print(scalar)
 
 variance = 1.5
-variance **= 2  # variance is now 2.25
+variance **= 2
+print(variance)
 
 invert = 4
-invert **= -1  # invert is now 0.25
+invert **= -1
+print(invert)
 
 level = 2
-level **= 5  # level is now 32
+level **= 5
+print(level)
 
 energy = 6
-energy **= 3  # energy is now 216
-
+energy **= 3
+print(energy)
