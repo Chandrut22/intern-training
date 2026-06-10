@@ -1,3 +1,14 @@
+# Arthimatic Operator  ->  +, -, *, **, /, //, %
+# Assignment Operator  ->  +=, -=, /=, *=, %=, **=
+# Comparasion Operator ->  <, >, <=, >=, ==, != 
+# Logical Operator     ->  and, or, not
+# Boolean              ->  True, False
+# Nested Condition     ->  if, if else, if elif else, nested if
+
+# Types of type conversion
+#   - Implicit
+#   - Explicit
+
 print("\nNumber Clasifier")
 num = int(input("Enter a number: "))
 if(num > 0): print("It is a positive number")
