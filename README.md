@@ -35,3 +35,13 @@
  - Day 4 task is completed
  - Mentor task:
   - pratice the problem solving using loops
+
+### Day 5
+
+- Studied and practiced about the function and types of args and practiced in list, tuple, set, dict, lambda expression, list comprehension are practied
+- Day 5 task is completed
+- Mentor Task:
+  - learned about the XOR operator
+  - learn map , lambda expression and practied that
+  - pratice a leetcode problems
+  - and study the concepts in project ascepts
