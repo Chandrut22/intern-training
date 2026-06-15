@@ -2,6 +2,8 @@
 
 ## Chandru
 
+## Week 1
+
 ### Day 1
 
 - Install the git, python, VS code in local machine
@@ -45,3 +47,10 @@
   - learn map , lambda expression and practied that
   - pratice a leetcode problems
   - and study the concepts in project ascepts
+
+## Week 2
+
+### Day 6
+ - Studied and practices about the class, object, __init__, __str__(),self, access modifiers, pillars of oop, nested class
+ - Day 6 task is completed
+ - Mentor Task:
