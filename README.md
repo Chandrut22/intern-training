@@ -55,5 +55,5 @@
  - Studied and practices about the class, object, __init__, __str__(),self, access modifiers, pillars of oop, nested class
  - Day 6 task is completed
  - Mentor Task:
-  - 
+    - Practices the Taxi Booking OOP application and pushed in github
 
