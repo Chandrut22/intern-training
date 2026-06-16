@@ -57,3 +57,8 @@
  - Mentor Task:
     - Practices the Taxi Booking OOP application and pushed in github
 
+### Day 7
+  - Studied and practices about the abstraction, inhertiance, polymorphism and encapsulation and special methods like __str__, __repr__ and pushed in github
+  - Day 7 task is completed
+  - Mentor Task:
+    - Practies the Rental Vehicle System console program using all concepts
