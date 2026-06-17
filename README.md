@@ -62,3 +62,6 @@
   - Day 7 task is completed
   - Mentor Task:
     - Practies the Rental Vehicle System console program using all concepts
+
+### Day 8
+  - Day 8 Tasks Completed. Studied and practices about the difference between pip and uv , modules, build-in exception, exception handling (try, except, else, finally) and custom exception handling and pushed the code in github
