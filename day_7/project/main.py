@@ -32,12 +32,13 @@ while True:
             elif cust_choice == "2":
                     agency.view_available_vehicles()
                     v_id = input("Enter Vehicle ID to rent: ").strip()
-                    try:
-                        days = int(input("Enter rental duration (days): "))
-                        if days <= 0: raise ValueError
-                        agency.rent_vehicle(v_id, days)
-                    except ValueError:
+                
+                    days = int(input("Enter rental duration (days): "))
+                    if days <= 0:
                         print("\n Invalid days entered. Rental cancelled.")
+                        break
+                    agency.rent_vehicle(v_id, days)
+                        
             elif cust_choice == "3":
                     v_id = input("Enter Vehicle ID to return: ").strip()
                     agency.return_vehicle(v_id)
@@ -57,7 +58,7 @@ while True:
 
                 if admin_choice == "1":
                     # Accessing via public getter method
-                    print(f"\n📊 Total Agency Revenue Collected: ${agency.get_revenue()}")
+                    print(f"\n Total Agency Revenue Collected: ${agency.get_revenue()}")
                 elif admin_choice == "2":
                     v_type = input("Enter type (car/bike): ").strip().lower()
                     v_id = input("Enter unique Vehicle ID: ").strip()
