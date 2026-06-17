@@ -33,10 +33,11 @@
   - and push all of praticed code in dev branch
 
 ### Day 4
- - Studied and praticed about the for loop and while loop and continue, break, pass statments and range function about its args and uses of else statement in both loop and learned about enumerate function
- - Day 4 task is completed
- - Mentor task:
-  - pratice the problem solving using loops
+
+- Studied and praticed about the for loop and while loop and continue, break, pass statments and range function about its args and uses of else statement in both loop and learned about enumerate function
+- Day 4 task is completed
+- Mentor task:
+- pratice the problem solving using loops
 
 ### Day 5
 
@@ -51,13 +52,18 @@
 ## Week 2
 
 ### Day 6
- - Studied and practices about the class, object, __init__, __str__(),self, access modifiers, pillars of oop, nested class
- - Day 6 task is completed
- - Mentor Task:
-    - Practices the Taxi Booking OOP application and pushed in github
+
+- Studied and practices about the class, object, __init__, __str__(),self, access modifiers, pillars of oop, nested class
+- Day 6 task is completed
+- Mentor Task:
+  - Practices the Taxi Booking OOP application and pushed in github
 
 ### Day 7
-  - Studied and practices about the abstraction, inhertiance, polymorphism and encapsulation and special methods like __str__, __repr__ and pushed in github
-  - Day 7 task is completed
-  - Mentor Task:
-    - Practies the Rental Vehicle System console program using all concepts
+
+- Studied and practices about the abstraction, inhertiance, polymorphism and encapsulation and special methods like __str__, __repr__ and pushed in github
+- Day 7 task is completed
+- Mentor Task:
+  - Practies the Rental Vehicle System console program using all concepts
+
+### Day 8
+- Studied and practices about the difference between pip and uv , modules, build-in exception, exception handling (try, except, else, finally) and custom exception handling
