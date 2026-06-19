@@ -67,3 +67,16 @@
 
 ### Day 8
 - Studied and practices about the difference between pip and uv , modules, build-in exception, exception handling (try, except, else, finally) and custom exception handling
+- Day 8 task is completed
+
+### Day 9
+- Studied and practies about What is API, REST, difference btw HTTP and HTTPS, HTTP Methods & Status code, about the port, Core concepts of REST and practices the FastAPI and Swagger UI docs and redocs
+- Day 9 task is completed
+
+### Day 10 
+- Studied and pratices about CRUD operation, type hint, Pydantic base model and HTTPException handling 
+- Day 10 Task is Completed
+- Mentor Task:
+  - practices the CRUD operation include the OOPS Concepts 
+  - Studied the uv ruff, mypy uvicorn, request, uv config, uv index, uv py-version, lockFile, .toml file 
+

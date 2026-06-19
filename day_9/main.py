@@ -51,36 +51,3 @@ def greet(name):
 
 # --------------------------------------------------------------------------------------------
 
-class Tasks(BaseModel):
-    id : int
-    title: str
-    description: str
-
-tasks = []
-
-
-@app.post("/tasks")
-def create(task:Tasks):
-    tasks.append(Tasks(id = len(tasks)+1, title=task.title, description=task.description))
-    return {"message": "Task added Successfully"}
-
-@app.get("/tasks")
-def show_all():
-    return tasks
-
-@app.get("/tasks/{id}")
-def show_by_id(id:int):
-    if(len(tasks) > id - 1): return tasks[id-1]
-    return {"message":"Task is not found. Please Give the correct task id"}
-
-@app.put("/task/{id}")
-def update(id:int, task:Tasks):
-    tasks.insert(id-1,Tasks(id = id, title=task.title, description=task.description))
-    return {"message" : "Task updated Successfully"}
-
-@app.delete("/task/{id}")
-def delete(id:int):
-    if(len(tasks) != 0):
-        del tasks[id-1]
-        return {"message" : "Task deleted Successfullt"}
-    return {"message":"Task is not found. Please Give the correct task id to delete"}
