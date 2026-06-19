@@ -17,10 +17,10 @@
 
 
 
-from Contact import add_contact, find_contact,list_contacts
-from Todo import add_task, remove_task, show_task
-import oop_advance
-import oop_basics
+from week_2.day_8.task.Contact import add_contact, find_contact,list_contacts
+from week_2.day_8.task.Todo import add_task, remove_task, show_task
+import week_2.day_8.task.oop_advance as oop_advance
+import week_2.day_8.task.oop_basics as oop_basics
 
 
 print("\n Contact Book")

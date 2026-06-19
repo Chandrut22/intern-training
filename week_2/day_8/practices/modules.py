@@ -1,4 +1,4 @@
-import fibo
+import week_2.day_8.practices.fibo as fibo
 # from fibo import fib, fib2
 # from fibo import *
 # import fibo as fib
@@ -13,5 +13,5 @@ fib = fibo.fib
 fib(500)
 
 
-from fibo import fib as fibonacci
+from week_2.day_8.practices.fibo import fib as fibonacci
 fibonacci(500)

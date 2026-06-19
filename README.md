@@ -72,3 +72,10 @@
 - Day 9 task is completed
 
 
+### Day 10 
+- Studied and pratices about CRUD operation, type hint, Pydantic base model and HTTPException handling 
+- Day 10 Task is Completed
+- Mentor Task:
+  - practices the CRUD operation include the OOPS Concepts 
+  - Studied the uv ruff, mypy uvicorn, request, uv config, uv index, uv py-version, lockFile, .toml file 
+
