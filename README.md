@@ -65,3 +65,10 @@
 
 ### Day 8
   - Day 8 Tasks Completed. Studied and practices about the difference between pip and uv , modules, build-in exception, exception handling (try, except, else, finally) and custom exception handling and pushed the code in github
+
+### Day 9
+
+- Studied and practies about What is API, REST, difference btw HTTP and HTTPS, HTTP Methods & Status code, about the port, Core concepts of REST and practices the FastAPI and Swagger UI docs and redocs
+- Day 9 task is completed
+
+
