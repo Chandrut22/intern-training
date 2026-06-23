@@ -13,7 +13,7 @@
 -- Unique Constrains - it ensure that the data contain in column or group of columns is unique 
 -- Primary Constrains - it ensure the unique identifiers for rows in table.
 -- Foregin Constrains - the values in columns or group of columns must match the values in some row of another table
--- Exclude Constrains 
+-- Exclude Constrains - Prevent specific relationships between rows
 
 
 -- types of Joins 
