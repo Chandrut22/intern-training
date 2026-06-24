@@ -83,6 +83,8 @@
   - practices the CRUD operation include the OOPS Concepts
   - Studied the uv ruff, mypy uvicorn, request, uv config, uv index, uv py-version, lockFile, .toml file
 
+## Week 3
+
 ### Day 11
 
 - Studied and practices about sql commands like select, create, insert, where statments and learned about the constraints and datatypes.
