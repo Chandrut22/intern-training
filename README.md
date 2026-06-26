@@ -104,3 +104,12 @@
 
 - studied and practices about the alembic migration and how to configure the DB and autogenerating, apply migration and connect the DB with Fastapi with DB session Dependency
 - Day 14 Task is completed
+
+### Day 15
+
+- studied studied and  practice the WebSocket and SSE in FastApi , EventSourceResponse and completed the today task bro. and push in github.
+- Day 15 Task is completed
+- Mentor Task:
+  - Create the session based real time chat application using WebSocket
+  - create the more methods and connect and run the SSE
+  
