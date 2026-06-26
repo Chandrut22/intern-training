@@ -94,3 +94,13 @@
 - Mentor Task:
   - know the order of queries and execution
   - pratice the indexes and transaction
+
+### Day 13
+
+- studied and practices about the sqlalchemy core and orm, models engine, session, declarative base, relationship and CRUD operation in ORM
+- Day 13 Task is completed
+
+### Day 14
+
+- studied and practices about the alembic migration and how to configure the DB and autogenerating, apply migration and connect the DB with Fastapi with DB session Dependency
+- Day 14 Task is completed
