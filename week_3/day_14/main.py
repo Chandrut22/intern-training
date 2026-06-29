@@ -1,8 +1,8 @@
 from fastapi import FastAPI, HTTPException,Depends
 from sqlalchemy.orm import Session
-from database import get_db
-from model import ToDoList
-from schema import TaskInput, TasksResponse
+from week_3.day_14.database import get_db
+from week_3.day_14.model import ToDoList
+from week_3.day_14.schema import TaskInput, TasksResponse
 
 app = FastAPI()
 
