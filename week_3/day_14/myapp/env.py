@@ -5,8 +5,8 @@ from sqlalchemy import engine_from_config
 from sqlalchemy import pool
 
 from alembic import context
-from database import Base
-from model import ToDoList
+from week_3.day_14.database import Base
+from week_3.day_14.model import ToDoList
 
 
 # this is the Alembic Config object, which provides

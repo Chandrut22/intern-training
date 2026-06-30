@@ -1,5 +1,5 @@
 import sqlalchemy as sa
-from database import Base
+from week_3.day_14.database import Base
 from sqlalchemy.orm import Mapped, mapped_column
 
 class ToDoList(Base):

@@ -1,0 +1,218 @@
+body {
+    height: 100vh;
+    margin: 0;
+    background: #c9d2cb;
+    font-family: sans-serif; /* Added for clean looking text */
+}
+
+.home {
+    background-image: url('cambridge-college.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    /* background-attachment: fixed; */
+    height: 100vh;
+    box-sizing: border-box;
+    
+    /* Flexbox layout to perfectly center your text vertically and horizontally */
+    display: flex;
+    flex-direction: column;
+    justify-content: center; 
+    align-items: center;
+}
+
+.navbar {
+    display: flex;
+    background-color: #ffffff;
+    border-radius: 30px;
+    padding: 10px 20px;
+
+    position: fixed;
+    top: 10px;
+    left: 2.5%;
+    width: 95%;
+
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+    z-index: 1000; /* Ensures navigation bar always stays on top of the image */
+}
+
+.menu {
+    display: flex;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.item {
+    margin: 0 15px;
+}
+
+.item a {
+    text-decoration: none;
+    color: #333;
+    font-weight: bold;
+}
+
+.item a:hover {
+    color: #2258c3;
+}
+
+.main {
+    color: #ffffff; 
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.6); 
+    font-size: 3rem;
+    margin: 0; 
+    text-align: center;
+}
+
+
+.university {
+    padding: 60px 5%;
+    background-color: #97c4f0; 
+    font-family: sans-serif;
+    overflow-x: auto; 
+    height: 100vh;
+    box-sizing: border-box;
+    
+    display: flex;
+    flex-direction: column;
+    justify-content: center; 
+    align-items: center;
+}
+
+.university table {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    border-collapse: collapse;
+    background-color: #ffffff;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    border-radius: 10px;
+    overflow: hidden; 
+    text-align: left;
+}
+
+
+.university th {
+    background-color: #2258c3; 
+    color: #ffffff;
+    padding: 16px 20px;
+    font-weight: 60px;
+    font-size: 0.95rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.university input{
+    padding: 10px;
+    margin: 15px;
+    border-radius: 25px;
+}
+
+.university td {
+    padding: 14px 20px;
+    border-bottom: 1px solid #eeeeee;
+    color: #444444;
+    font-size: 0.95rem;
+}
+
+.university tr:nth-child(even) {
+    background-color: #f9fbfd;
+}
+
+.university tr:hover {
+    background-color: #f1f5fe;
+    transition: background-color 0.2s ease;
+}
+
+.university td:first-child {
+    font-weight: bold;
+    color: #2258c3;
+    width: 50px;
+}
+
+.university td a {
+    color: #2258c3;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.university td a:hover {
+    text-decoration: underline;
+}
+
+
+.about-us{
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center; 
+    align-items: center;
+}
+
+
+.contact-us{
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center; 
+    align-items: center;
+    background-color: cadetblue;
+    
+
+}
+
+.submit-button {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 0.75rem;
+    border-radius: 4px;
+    font-size: 1rem;
+    cursor: pointer;
+    width: 100%;
+    transition: background-color 0.3s;
+}
+
+.submit-button:hover {
+    background-color: #218838;
+}
+
+textarea {
+    resize: vertical;
+}
+
+form{
+    width: 50%;
+}
+
+.form-group{
+    margin-bottom: 1rem;
+}
+
+
+label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+    color: #333;
+}
+
+input, textarea {
+    width: 100%;
+    padding: 0.8rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 1rem;
+}
+
+textarea {
+    resize: vertical;
+}
+
+.description{
+    padding-inline: 50px;
+}
