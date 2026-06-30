@@ -116,7 +116,7 @@
   - Create the session based real time chat application using WebSocket
   - create the more methods and connect and run the SSE
 
-## Week 2
+## Week 4
 
 ### Day 16
 
@@ -124,3 +124,10 @@
 - Day 16 Task is completed
 - Mentor Task:
   - Currently working SSE proper implementation
+
+### Day 17
+
+- studied and practices to update the existing html and css file to create the features like call public api query to display the details and using event listener and array methods
+- Day 17 Task is complteted
+- Mentor Task:
+  - Keep practices the css and DOM

@@ -4,6 +4,7 @@ from fastapi.sse import EventSourceResponse
 import asyncio
 import os
 import httpx
+import uvicorn
 
 app = FastAPI()
 
@@ -120,3 +121,7 @@ async def event_generator():
 @app.get("/events")
 async def events():
     return EventSourceResponse(event_generator())
+
+
+if __name__ == "__main__":
+    uvicorn.run("main:app", host="127.0.0.1", port=8000, reload=True)
