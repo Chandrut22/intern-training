@@ -128,3 +128,13 @@
 - Day 17 Task is complteted
 - Mentor Task:
   - Keep practices the css and DOM
+
+### Day 18
+
+- learned about the typescript types, interface, type alias, generics and practices about that and explore and study the project folder structure, npm scripts, purpose of vite and react and how to import the module.
+- Day 18 Task is completed
+
+### Day 19
+
+- studied about the project file and purpose and learned the React libary and useState and function components and props and learned about the conditional rendering and events handling
+- Day 19 Task is completed
