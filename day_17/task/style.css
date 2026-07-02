@@ -1,7 +1,25 @@
+:root{
+    --body-bg: #c9d2cb;
+    --navbar-bg: #ffffff;
+    --text-color: #333;
+    --about-bg: #c9d2cb;
+    --contact-bg: cadetblue;
+    --table-bg: #ffffff;
+}
+
+body.dark-theme{
+    --body-bg: #121212;
+    --navbar-bg: #1e1e1e;
+    --text-color: #ffffff;
+    --about-bg: #1b1b1b;
+    --contact-bg: #243b45;
+    --table-bg: #2b2b2b;
+}
+
 body {
     height: 100vh;
     margin: 0;
-    background: #c9d2cb;
+    background: var(--body-bg);
     font-family: sans-serif; /* Added for clean looking text */
 }
 
@@ -23,7 +41,7 @@ body {
 
 .navbar {
     display: flex;
-    background-color: #ffffff;
+    background-color: var(--navbar-bg);
     border-radius: 30px;
     padding: 10px 20px;
 
@@ -51,7 +69,7 @@ body {
 
 .item a {
     text-decoration: none;
-    color: #333;
+    color: var(--text-color);
     font-weight: bold;
 }
 
@@ -87,7 +105,7 @@ body {
     max-width: 1200px;
     margin: 0 auto;
     border-collapse: collapse;
-    background-color: #ffffff;
+    background-color: var(--table-bg);
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
     border-radius: 10px;
     overflow: hidden; 
@@ -145,6 +163,8 @@ body {
 
 
 .about-us{
+    background: var(--about-bg);
+    color: var(--text-color);
     height: 100vh;
     display: flex;
     flex-direction: column;
@@ -154,6 +174,8 @@ body {
 
 
 .contact-us{
+    background: var(--contact-bg);
+    color: var(--text-color);
     height: 100vh;
     display: flex;
     flex-direction: column;
@@ -197,7 +219,7 @@ label {
     display: block;
     margin-bottom: 0.5rem;
     font-weight: bold;
-    color: #333;
+    color: var(--text-color);
 }
 
 input, textarea {
@@ -250,4 +272,20 @@ textarea {
     color: #999;
     cursor: not-allowed;
     background-color: #fafafa;
+}
+
+.theme-toggle{
+    margin-left: auto;
+    padding: 8px 14px;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    background: #2258c3;
+    color: white;
+    font-size: 18px;
+    transition: 0.3s;
+}
+
+.theme-toggle:hover{
+    opacity: 0.9;
 }
