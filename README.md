@@ -138,3 +138,8 @@
 
 - studied about the project file and purpose and learned the React libary and useState and function components and props and learned about the conditional rendering and events handling
 - Day 19 Task is completed
+
+### Day 20
+
+- studied about the how to install and configure the tailwind css in vite project and learn about the how to build the form using useState and useEffect and learn about the custom hooks.
+- Day 20 Task is completed
