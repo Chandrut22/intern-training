@@ -1,67 +1,34 @@
-from fastapi import FastAPI, HTTPException,Depends
-from sqlalchemy.orm import Session
-from database import get_db
-from model import ToDoList
-from schema import TaskInput, TasksResponse
-import uvicorn
+from fastapi import FastAPI
+from app.router.socket import router as websocket_router
+from app.router.event import router as sse_router
+from app.router.auth import router as auth_router
+from app.router.chatbot import router as chat_router
 from fastapi.middleware.cors import CORSMiddleware
+import uvicorn
 
 app = FastAPI()
 
-origins = [
-    "http://localhost:5173",
-]
-
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=origins,
+    allow_origins=[
+        "http://localhost:5173",
+        "http://127.0.0.1:5173",
+    ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
-@app.post("/tasks")
-def create(task:TaskInput, db:Session = Depends(get_db)):
-    new_task = ToDoList(task_title=task.title,description=task.description)
-    db.add(new_task)
-    db.commit()
-    return {"message" : "Task Added Successfully"}
-
-@app.get("/tasks")
-def show_all(db:Session = Depends(get_db)):
-    return db.query(ToDoList).all()
-
-@app.get("/tasks/{id}")
-def show_by_id(id:int, db:Session = Depends(get_db)):
-    task =  db.query(ToDoList).filter_by(id=id).first()
-    if task == None:
-        raise HTTPException(status_code=404, detail="Task not found")
-    return task
-
-@app.put("/task/{id}")
-def update(id:int, task:TaskInput,db:Session = Depends(get_db)):
-    print(task)
-    update_task = db.query(ToDoList).filter_by(id=id).first()
-    if update_task == None:
-        raise HTTPException(status_code=404, detail="Task not found")
-    update_task.task_title = task.title
-    update_task.description = task.description
-    update_task.iscompleted = task.is_competed
-    print(update_task)
-    db.commit()
-    return {"message" : "Task Updated Successfully"}
+app.include_router(websocket_router)
+app.include_router(sse_router)
+app.include_router(auth_router)
+app.include_router(chat_router)
 
 
-@app.delete("/task/{id}")
-def delete(id:int,db:Session = Depends(get_db)):
-    task = db.query(ToDoList).filter_by(id=id).first()
-    if task == None:
-        raise HTTPException(status_code=404, detail="Task not found")
-    db.delete(task)
-    db.commit()
-    return {"message" : "Task Deleted Successfully"}
+@app.get("/")
+def home():
+    return {"message": "Chat Application API"}
 
 
 if __name__ == "__main__":
-    uvicorn.run("main:app", port=8000, reload=True)
-
+    uvicorn.run("main:app", host="127.0.0.1", port=8000, reload=True)
