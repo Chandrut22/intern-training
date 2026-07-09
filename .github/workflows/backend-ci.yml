@@ -11,7 +11,7 @@ jobs:
 
     defaults:
       run:
-        working-directory: day23/backend
+        working-directory: day24/backend
 
     steps:
       - name: Checkout Repository
