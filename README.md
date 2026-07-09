@@ -143,3 +143,23 @@
 
 - studied about the how to install and configure the tailwind css in vite project and learn about the how to build the form using useState and useEffect and learn about the custom hooks.
 - Day 20 Task is completed
+
+## Week 5
+
+### Day 21
+
+- studied about the tanstack router and its purpose and difference btw the react router vs tanstack router and learnt about the Tanstack Query solves and basics of useQuery and useMutation and connect the backend and frontend using fetch
+
+### Day 22
+
+- practices the tanstack router, dynamic params and coneect the backend and frontend and connect websocket ,see  backend and apply the CORS in backend.
+- Day 21 and 22 task is completed
+- Mentor Task:
+  - create the chat application using websocket
+  - and learned about the frontend and backend folder structured
+
+### Day 23
+
+- learned about the docker, images, volumns and containers and purpose of the docker and purpose of Dockerfile, docker-compose.yml, .dockerignore and how to code and change the depenedency for docker
+- Mentor Task:
+  - update the existing chat application add the additional features AI chatbot
