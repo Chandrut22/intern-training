@@ -1,6 +1,6 @@
 from decimal import Decimal
 
-from src.token_cost.cost import calculate_cost, format_cost
+from src.token.cost import calculate_cost, format_cost
 
 
 def main() -> None:

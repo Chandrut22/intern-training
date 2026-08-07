@@ -1,4 +1,4 @@
-from src.token_cost import calculate_cost
+from src.token import calculate_cost
 
 print("Imported successfully.")
 
