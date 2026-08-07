@@ -1,0 +1,27 @@
+[
+  {
+    "role": "system",
+    "content": "You are a helpful assistant.",
+    "tokens": 6
+  },
+  {
+    "role": "user",
+    "content": "Hello!",
+    "tokens": 2
+  },
+  {
+    "role": "assistant",
+    "content": "Hi! How can I help?",
+    "tokens": 6
+  },
+  {
+    "role": "user",
+    "content": "Explain dicts.",
+    "tokens": 3
+  },
+  {
+    "role": "assistant",
+    "content": "Key-value pairs.",
+    "tokens": 3
+  }
+]
