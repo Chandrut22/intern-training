@@ -73,7 +73,7 @@ print(token_sort)
 
 token_counts = []
 
-with open("tasks\\tokens.txt",mode="r") as f:
+with open("C:\\Genworx\\intern-training\\prerequisites\\tokens.txt",mode="r") as f:
     for i,token in enumerate(f,start=1):
         try:
             v = int(token.strip())

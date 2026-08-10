@@ -34,8 +34,8 @@ class Message:
 
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
-GOOD_PATH = PROJECT_ROOT / "tasks" / "data" / "transcript.json"
-BAD_PATH = PROJECT_ROOT / "tasks" / "data" / "transcript_broken.json"
+GOOD_PATH = PROJECT_ROOT / "Prerequisites" / "data" / "transcript.json"
+BAD_PATH = PROJECT_ROOT / "Prerequisites" / "data" / "transcript_broken.json"
 
 
 def load_transcript(path: Path) -> list[dict[str, Any]]:
@@ -130,40 +130,9 @@ def _run(path: Path) -> None:
     print(f"report_time_ms  : {elapsed_ms:.3f}")
 
 
-def _ensure_sample_files() -> None:
-    """Create a valid + a malformed JSON file under tasks/data/ for the demo."""
-    data_dir = PROJECT_ROOT / "tasks" / "data"
-    data_dir.mkdir(parents=True, exist_ok=True)
 
-    good = data_dir / "transcript.json"
-    if not good.exists():
-        good.write_text(
-            json.dumps(
-                [
-                    {"role": "system",    "content": "You are a helpful assistant.", "tokens": 6},
-                    {"role": "user",      "content": "Hello!",                        "tokens": 2},
-                    {"role": "assistant", "content": "Hi! How can I help?",           "tokens": 6},
-                    {"role": "user",      "content": "Explain dicts.",                "tokens": 3},
-                    {"role": "assistant", "content": "Key-value pairs.",              "tokens": 3},
-                ],
-                indent=2,
-            ),
-            encoding="utf-8",
-        )
+print("── good transcript ──")
+_run(GOOD_PATH)
 
-    bad = data_dir / "transcript_broken.json"
-    if not bad.exists():
-        bad.write_text(
-            '[\n  {"role": "user", "content": "hi", "tokens": 1}\n',
-            encoding="utf-8",
-        )
-
-
-if __name__ == "__main__":
-    _ensure_sample_files()
-
-    print("── good transcript ──")
-    _run(GOOD_PATH)
-
-    print("\n── malformed transcript (missing '}') ──")
-    _run(BAD_PATH)
+print("\n── malformed transcript (missing '}') ──")
+_run(BAD_PATH)
