@@ -1,0 +1,91 @@
+intern-training) PS C:\Genworx\intern-training\week_1\task_3> uv run main.py
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Estimated prompt tokens (pre-flight): 73
+
+
+
+First response:
+My knowledge is current up to **June 2024**. That means I can draw on information, events, and developments that were publicly available up to that point. Anything that happened after that—major news stories, newer scientific discoveries, changes in tech, policy updates, etc.—is outside my training data, so I might not be aware of it or the most recent details. If you need the absolute latest updates, you may want to double‑check with a more up‑to‑date source.
+
+
+
+--- Token Usage & Performance ---
+Pre-flight estimated tokens: 73
+Model Provider:              Novita
+OpenRouter prompt tokens:    75
+Completion tokens:           237
+Total tokens:                312
+Latency:                     2240.90 ms
+Cost (USD):                  $0.0000386
+Cost (INR):                  ₹0.0036777
+
+
+(intern-training) PS C:\Genworx\intern-training\week_1\task_3> uv run main.py
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Estimated prompt tokens (pre-flight): 73
+
+
+
+First response:
+My knowledge is current through **June 2024**. I can’t access events, developments, or new data that have emerged after that point.
+
+
+
+--- Token Usage & Performance ---
+Pre-flight estimated tokens: 73
+Model Provider:              DeepInfra
+OpenRouter prompt tokens:    60
+Completion tokens:           106
+Total tokens:                166
+Latency:                     3384.68 ms
+Cost (USD):                  $0.0000166
+Cost (INR):                  ₹0.0015875
+
+
+(intern-training) PS C:\Genworx\intern-training\week_1\task_3> uv run main.py
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Estimated prompt tokens (pre-flight): 73
+
+
+
+First response:
+My training data only includes information up to September 2021. Anything that happened after that—new publications, events, product releases, etc.—is outside the scope of my knowledge.
+
+
+
+--- Token Usage & Performance ---
+Pre-flight estimated tokens: 73
+Model Provider:              Novita
+OpenRouter prompt tokens:    75
+Completion tokens:           117
+Total tokens:                192
+Latency:                     1476.27 ms
+Cost (USD):                  $0.0000206
+Cost (INR):                  ₹0.0019605
+(intern-training) PS C:\Genworx\intern-training\week_1\task_3> uv run main.py
+
+
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Estimated prompt tokens (pre-flight): 73
+
+
+
+First response:
+My training data includes information up to **June 2024**. I’m not aware of events or developments that occurred after that date.
+
+
+
+--- Token Usage & Performance ---
+Pre-flight estimated tokens: 73
+Model Provider:              CoreWeave
+OpenRouter prompt tokens:    71
+Completion tokens:           68
+Total tokens:                139
+Latency:                     1410.03 ms
+Cost (USD):                  $0.0000110
+Cost (INR):                  ₹0.0010465
+(intern-training) PS C:\Genworx\intern-training\week_1\task_3>
