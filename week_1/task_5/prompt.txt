@@ -1,0 +1,10 @@
+Explain what an LLM is in simple terms.
+What is inference in machine learning?
+Explain the difference between TCP and UDP.
+What is a Python decorator?
+Explain database indexing.
+What is asynchronous programming?
+Explain REST API architecture.
+What is the difference between authentication and authorization?
+Explain how JWT authentication works.
+What is concurrency in Python.

@@ -1,0 +1,75 @@
+MODEL=openai/gpt-oss-20b
+BATCH_SIZE=10
+
+SEQUENTIAL TEST
+[1] SUCCESS | time=3.38s | input=75 | output=200 | total=275 | cost=$0.000028
+[2] SUCCESS | time=3.51s | input=72 | output=200 | total=272 | cost=$0.000028
+[3] SUCCESS | time=2.94s | input=75 | output=200 | total=275 | cost=$0.000032
+[4] SUCCESS | time=8.50s | input=73 | output=200 | total=273 | cost=$0.000032
+[5] SUCCESS | time=2.76s | input=71 | output=200 | total=271 | cost=$0.000031
+[6] SUCCESS | time=14.14s | input=72 | output=200 | total=272 | cost=$0.000032
+[7] SUCCESS | time=14.74s | input=72 | output=200 | total=272 | cost=$0.000032
+[8] SUCCESS | time=5.12s | input=76 | output=200 | total=276 | cost=$0.000032
+[9] SUCCESS | time=2.56s | input=75 | output=200 | total=275 | cost=$0.000033
+[10] SUCCESS | time=2.75s | input=60 | output=200 | total=260 | cost=$0.000030
+Sequential | requests=10 | time=60.40s
+
+CONCURRENT TEST
+[1] SUCCESS | time=2.93s | input=64 | output=200 | total=264 | cost=$0.000030
+[3] SUCCESS | time=3.14s | input=75 | output=200 | total=275 | cost=$0.000032
+[5] SUCCESS | time=3.14s | input=71 | output=200 | total=271 | cost=$0.000031
+[10] SUCCESS | time=3.14s | input=60 | output=200 | total=260 | cost=$0.000030
+[9] SUCCESS | time=3.29s | input=73 | output=200 | total=273 | cost=$0.000032
+[4] SUCCESS | time=3.38s | input=73 | output=200 | total=273 | cost=$0.000032
+[8] SUCCESS | time=14.91s | input=76 | output=200 | total=276 | cost=$0.000032
+[2] SUCCESS | time=14.94s | input=74 | output=200 | total=274 | cost=$0.000032
+[7] SUCCESS | time=14.96s | input=72 | output=200 | total=272 | cost=$0.000032
+[6] SUCCESS | time=15.93s | input=72 | output=200 | total=272 | cost=$0.000032
+Concurrent | requests=10 | time=15.94s
+
+RESULT
+Sequential | requests=10 | success=10 | failed=0 | time=60.40s | avg_latency=6.04s | input_tokens=721 | output_tokens=2000 | total_tokens=2721 | cost=$0.000309 | throughput=0.17 req/s
+Concurrent | requests=10 | success=10 | failed=0 | time=15.94s | avg_latency=7.97s | input_tokens=710 | output_tokens=2000 | total_tokens=2710 | cost=$0.000312 | throughput=0.63 req/s
+Comparison | time_saved=44.47s | speedup=3.79x | improvement=73.62% | cost_difference=$0.000004
+
+
+(intern-training) PS C:\Genworx\intern-training\week_1\task_5> uv run main.py
+MODEL=openai/gpt-oss-20b
+BATCH_SIZE=10
+
+SEQUENTIAL TEST
+[1] SUCCESS | time=4.42s | input=77 | output=200 | total=277 | cost=$0.000033
+[2] SUCCESS | time=3.89s | input=74 | output=200 | total=274 | cost=$0.000032
+[3] SUCCESS | time=2.72s | input=75 | output=200 | total=275 | cost=$0.000032
+[4] SUCCESS | time=4.24s | input=73 | output=200 | total=273 | cost=$0.000032
+[5] SUCCESS | time=3.38s | input=71 | output=200 | total=271 | cost=$0.000031
+[6] SUCCESS | time=15.70s | input=72 | output=200 | total=272 | cost=$0.000032
+[7] SUCCESS | time=15.02s | input=72 | output=200 | total=272 | cost=$0.000032
+[8] SUCCESS | time=15.81s | input=76 | output=200 | total=276 | cost=$0.000032
+[9] SUCCESS | time=3.69s | input=73 | output=200 | total=273 | cost=$0.000032
+[10] SUCCESS | time=13.87s | input=73 | output=200 | total=273 | cost=$0.000033
+Sequential | requests=10 | time=82.76s
+
+CONCURRENT TEST
+[3] SUCCESS | time=3.46s | input=75 | output=200 | total=275 | cost=$0.000032
+[9] SUCCESS | time=3.73s | input=73 | output=200 | total=273 | cost=$0.000032
+[4] SUCCESS | time=5.28s | input=73 | output=200 | total=273 | cost=$0.000032
+[5] SUCCESS | time=5.77s | input=71 | output=200 | total=271 | cost=$0.000031
+[8] SUCCESS | time=15.68s | input=76 | output=200 | total=276 | cost=$0.000032
+[2] SUCCESS | time=15.91s | input=74 | output=200 | total=274 | cost=$0.000032
+[1] SUCCESS | time=15.91s | input=77 | output=200 | total=277 | cost=$0.000032
+[6] SUCCESS | time=16.23s | input=72 | output=200 | total=272 | cost=$0.000032
+[7] SUCCESS | time=16.44s | input=72 | output=200 | total=272 | cost=$0.000032
+[10] SUCCESS | time=121.93s | input=73 | output=1437 | total=1510 | cost=$0.000262
+Concurrent | requests=10 | time=121.94s
+
+RESULT
+Sequential | requests=10 | success=10 | failed=0 | time=82.76s | avg_latency=8.28s | input_tokens=736 | output_tokens=2000 | total_tokens=2736 | cost=$0.000318 | throughput=0.12 req/s
+Concurrent | requests=10 | success=10 | failed=0 | time=121.94s | avg_latency=22.03s | input_tokens=736 | output_tokens=3237 | total_tokens=3973 | cost=$0.000546 | throughput=0.08 req/s
+Comparison | time_saved=-39.17s | speedup=0.68x | improvement=-47.33% | cost_difference=$0.000227
+
+[09:51:38]
+(intern-training) PS C:\Genworx\intern-training\week_1\task_5> 
+
+
+
