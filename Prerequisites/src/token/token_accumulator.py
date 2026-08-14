@@ -1,6 +1,7 @@
 from src.token import calculate_cost, format_cost
 from decimal import Decimal
 
+
 class TokenAccumulator:
     """Accumulate token counts across many add() calls and report running cost."""
 

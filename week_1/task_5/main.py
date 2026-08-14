@@ -28,6 +28,7 @@ with open("prompt.txt", "r", encoding="utf-8") as file:
     for line in file:
         PROMPTS.append(line)
 
+
 @dataclass
 class RequestResult:
     index: int
@@ -40,8 +41,11 @@ class RequestResult:
     error: str | None = None
 
 
-
-async def send_request(client: httpx.AsyncClient,prompt: str,index: int,) -> RequestResult:
+async def send_request(
+    client: httpx.AsyncClient,
+    prompt: str,
+    index: int,
+) -> RequestResult:
 
     payload = {
         "model": MODEL,
@@ -65,7 +69,9 @@ async def send_request(client: httpx.AsyncClient,prompt: str,index: int,) -> Req
         total_tokens = usage.get("total_tokens", input_tokens + output_tokens)
         cost = usage.get("cost")
 
-        print(f"[{index + 1}] SUCCESS | time={latency:.2f}s | input={input_tokens} | output={output_tokens} | total={total_tokens} | cost=${cost:.6f}")
+        print(
+            f"[{index + 1}] SUCCESS | time={latency:.2f}s | input={input_tokens} | output={output_tokens} | total={total_tokens} | cost=${cost:.6f}"
+        )
 
         return RequestResult(
             index=index,
@@ -130,8 +136,7 @@ async def concurrent_test(prompts: list[str]) -> tuple[list[RequestResult], floa
         start = time.perf_counter()
 
         tasks = [
-            send_request(client, prompt, index)
-            for index, prompt in enumerate(prompts)
+            send_request(client, prompt, index) for index, prompt in enumerate(prompts)
         ]
 
         results = await asyncio.gather(*tasks)
@@ -153,9 +158,7 @@ def get_stats(results: list[RequestResult]) -> dict[str, Any]:
     total_cost = sum(result.cost for result in results)
 
     average_latency = (
-        sum(result.latency for result in results) / len(results)
-        if results
-        else 0
+        sum(result.latency for result in results) / len(results) if results else 0
     )
 
     return {
@@ -180,20 +183,22 @@ async def main() -> None:
     sequential = get_stats(sequential_results)
     concurrent = get_stats(concurrent_results)
 
-    speedup = (
-        sequential_time / concurrent_time
-        if concurrent_time > 0
-        else 0
-    )
+    speedup = sequential_time / concurrent_time if concurrent_time > 0 else 0
 
     time_saved = sequential_time - concurrent_time
 
-    improvement = (time_saved / sequential_time * 100 if sequential_time > 0 else 0)
+    improvement = time_saved / sequential_time * 100 if sequential_time > 0 else 0
 
     print("\nRESULT")
-    print(f"Sequential | requests={sequential['requests']} | success={sequential['successful']} | failed={sequential['failed']} | time={sequential_time:.2f}s | avg_latency={sequential['average_latency']:.2f}s | input_tokens={sequential['input_tokens']} | output_tokens={sequential['output_tokens']} | total_tokens={sequential['total_tokens']} | cost=${sequential['cost']:.6f} | throughput={sequential['successful'] / sequential_time:.2f} req/s")
-    print(f"Concurrent | requests={concurrent['requests']} | success={concurrent['successful']} | failed={concurrent['failed']} | time={concurrent_time:.2f}s | avg_latency={concurrent['average_latency']:.2f}s | input_tokens={concurrent['input_tokens']} | output_tokens={concurrent['output_tokens']} | total_tokens={concurrent['total_tokens']} | cost=${concurrent['cost']:.6f} | throughput={concurrent['successful'] / concurrent_time:.2f} req/s")
-    print(f"Comparison | time_saved={time_saved:.2f}s | speedup={speedup:.2f}x | improvement={improvement:.2f}% | cost_difference=${concurrent['cost'] - sequential['cost']:.6f}")
+    print(
+        f"Sequential | requests={sequential['requests']} | success={sequential['successful']} | failed={sequential['failed']} | time={sequential_time:.2f}s | avg_latency={sequential['average_latency']:.2f}s | input_tokens={sequential['input_tokens']} | output_tokens={sequential['output_tokens']} | total_tokens={sequential['total_tokens']} | cost=${sequential['cost']:.6f} | throughput={sequential['successful'] / sequential_time:.2f} req/s"
+    )
+    print(
+        f"Concurrent | requests={concurrent['requests']} | success={concurrent['successful']} | failed={concurrent['failed']} | time={concurrent_time:.2f}s | avg_latency={concurrent['average_latency']:.2f}s | input_tokens={concurrent['input_tokens']} | output_tokens={concurrent['output_tokens']} | total_tokens={concurrent['total_tokens']} | cost=${concurrent['cost']:.6f} | throughput={concurrent['successful'] / concurrent_time:.2f} req/s"
+    )
+    print(
+        f"Comparison | time_saved={time_saved:.2f}s | speedup={speedup:.2f}x | improvement={improvement:.2f}% | cost_difference=${concurrent['cost'] - sequential['cost']:.6f}"
+    )
 
 
 if __name__ == "__main__":

@@ -23,4 +23,3 @@ try:
     bad = Role("usesr")  # typo
 except ValueError as e:
     print(f"Misspelled role -> {e}")
-

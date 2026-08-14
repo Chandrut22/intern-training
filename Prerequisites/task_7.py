@@ -8,7 +8,6 @@ from pydantic import BaseModel, ValidationError
 load_dotenv()
 
 
-
 class Message(BaseModel):
     sender: str
     content: str
@@ -19,7 +18,6 @@ class Medication(BaseModel):
     name: str
     dose: str | None = None
     frequency: str | None = None
-
 
 
 def get_api_key() -> str | None:
@@ -46,8 +44,6 @@ def parse_medications_file(file_path: str) -> list[Medication]:
     return [Medication.model_validate(item) for item in raw_data]
 
 
-
-
 print("--- 1. Testing API Key Environment Variable ---")
 api_key: str | None = get_api_key()
 if api_key:
@@ -65,11 +61,11 @@ print(f"Medication without dose: {optional_dose_med}\n")
 
 print("--- 3. Feeding Invalid Type Record & Catching Validation Error ---")
 invalid_json_record = json.dumps(
-        {
-            "name": "Amoxicillin",
-            "dose": {"amount": 500, "unit": "mg"},  # Wrong type!
-        }
-    )
+    {
+        "name": "Amoxicillin",
+        "dose": {"amount": 500, "unit": "mg"},  # Wrong type!
+    }
+)
 
 try:
     print("Attempting to parse invalid JSON record...")

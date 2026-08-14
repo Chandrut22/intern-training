@@ -1,5 +1,6 @@
 from abc import ABC, abstractmethod
 
+
 class BaseSummarizer(ABC):
     """Base class: every subclass must implement summarize()."""
 
@@ -11,6 +12,7 @@ class BaseSummarizer(ABC):
 
 class TruncateSummarizer(BaseSummarizer):
     """Take the first N characters."""
+
     def __init__(self, limit: int = 50) -> None:
         self.limit = limit
 
@@ -20,6 +22,7 @@ class TruncateSummarizer(BaseSummarizer):
 
 class WordCountSummarizer(BaseSummarizer):
     """Report length as 'N words'."""
+
     def summarize(self, text: str) -> str:
         n = len(text.split())
         return f"{n} words"

@@ -1,5 +1,3 @@
-
-
 from collections import defaultdict
 from datetime import datetime, timezone
 from decimal import Decimal
@@ -17,9 +15,7 @@ logging.basicConfig(level=logging.INFO, format="%(levelname)s: %(message)s")
 logger = logging.getLogger(__name__)
 
 
-PHONE_REGEX = re.compile(
-    r"(?<!\d)(?:\(?\d{3}\)?[\s\-\.]*)\d{3}[\s\-\.]*\d{4}(?!\d)"
-)
+PHONE_REGEX = re.compile(r"(?<!\d)(?:\(?\d{3}\)?[\s\-\.]*)\d{3}[\s\-\.]*\d{4}(?!\d)")
 
 PRICING_PER_1K: dict[str, dict[str, Decimal]] = {
     "system": {"input": Decimal("0.0025"), "output": Decimal("0.0000")},
@@ -128,7 +124,6 @@ def process_pipeline(file_path: Path) -> dict[str, Any]:
     }
 
 
-
 def test_phone_number_redaction():
     """Test 1: Ensures 10-digit phone numbers are redacted correctly."""
     raw = "Reach me at 123-456-7890 or 9876543210."
@@ -194,39 +189,36 @@ def test_pipeline_broken_file(tmp_path: Path):
     assert result["skipped_count"] == 2
 
 
-
-
-
 print("--- Running Gate Pipeline Demonstration ---\n")
 
 clean_file = Path("demo_clean_messages.json")
 broken_file = Path("demo_broken_messages.json")
 
 clean_sample = [
-        {"role": "system", "content": "System operational.", "tokens": 150},
-        {
-            "role": "user",
-            "content": "Call support at 800-555-0199 or 555-014-9988.",
-            "tokens": 450,
-        },
-        {"role": "assistant", "content": "Understood. Account confirmed.", "tokens": 300},
-    ]
+    {"role": "system", "content": "System operational.", "tokens": 150},
+    {
+        "role": "user",
+        "content": "Call support at 800-555-0199 or 555-014-9988.",
+        "tokens": 450,
+    },
+    {"role": "assistant", "content": "Understood. Account confirmed.", "tokens": 300},
+]
 
 broken_sample = [
-        {"role": "user", "content": "Valid user record", "tokens": 200},
-        {"role": "user", "content": "Broken record missing tokens"},
-        {"role": "assistant", "content": "Negative tokens test", "tokens": -50},
-        {
-            "role": "assistant",
-            "content": "Reach agent at 987-654-3210 for details.",
-            "tokens": 500,
-        },
-    ]
+    {"role": "user", "content": "Valid user record", "tokens": 200},
+    {"role": "user", "content": "Broken record missing tokens"},
+    {"role": "assistant", "content": "Negative tokens test", "tokens": -50},
+    {
+        "role": "assistant",
+        "content": "Reach agent at 987-654-3210 for details.",
+        "tokens": 500,
+    },
+]
 
 clean_file.write_text(json.dumps(clean_sample, indent=2), encoding="utf-8")
 broken_file.write_text(json.dumps(broken_sample, indent=2), encoding="utf-8")
 
-    # Run clean file
+# Run clean file
 print("1. Processing CLEAN input file:")
 res_clean = process_pipeline(clean_file)
 print(f"   - Processed: {res_clean['processed_count']}")
@@ -235,7 +227,7 @@ print(f"   - Tokens:    {res_clean['tokens_per_role']}")
 print(f"   - Costs:     {res_clean['cost_per_role']}")
 print(f"   - Duration:  {res_clean['execution_time_seconds']}s\n")
 
-    # Run broken file
+# Run broken file
 print("2. Processing BROKEN input file:")
 res_broken = process_pipeline(broken_file)
 print(f"   - Processed: {res_broken['processed_count']}")

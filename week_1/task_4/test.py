@@ -1,5 +1,5 @@
 import os
-import json 
+import json
 
 import httpx
 from dotenv import load_dotenv
@@ -39,7 +39,7 @@ response = httpx.post(
     URL,
     headers=HEADERS,
     json={
-        "temperature":1.0,
+        "temperature": 1.0,
         "model": MODEL,
         "messages": messages,
         "max_completion_tokens": 1000,

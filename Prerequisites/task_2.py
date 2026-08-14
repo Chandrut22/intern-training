@@ -51,9 +51,11 @@ messages = [
     },
 ]
 
-for i, msg in enumerate(messages,start=1):
-    print(f"{i}) User: {msg["role"]}\nContent: {msg["content"]}\nNo. of Token: {msg["tokens"]}\nCost: {(msg['tokens']*0.25):.6f}\n")
-    msg["cost"] = msg['tokens']*0.25
+for i, msg in enumerate(messages, start=1):
+    print(
+        f"{i}) User: {msg['role']}\nContent: {msg['content']}\nNo. of Token: {msg['tokens']}\nCost: {(msg['tokens'] * 0.25):.6f}\n"
+    )
+    msg["cost"] = msg["tokens"] * 0.25
 
 
 assistant_messages_loop = []
@@ -62,19 +64,18 @@ for message in messages:
         assistant_messages_loop.append(message)
 
 assistant_messages_comp = [
-    message for message in messages
-    if message["role"] == "assistant"
+    message for message in messages if message["role"] == "assistant"
 ]
 
 print("Results are identical:", assistant_messages_loop == assistant_messages_comp)
 
-token_sort = sorted(messages,key=lambda x:x['tokens'])
+token_sort = sorted(messages, key=lambda x: x["tokens"])
 print(token_sort)
 
 token_counts = []
 
-with open("C:\\Genworx\\intern-training\\prerequisites\\tokens.txt",mode="r") as f:
-    for i,token in enumerate(f,start=1):
+with open("C:\\Genworx\\intern-training\\prerequisites\\tokens.txt", mode="r") as f:
+    for i, token in enumerate(f, start=1):
         try:
             v = int(token.strip())
             token_counts.append(v)
@@ -102,9 +103,11 @@ print(f"Text              : {text}")
 print(f"Characters        : {char_count}")
 print(f"UTF-8 byte length : {utf8_byte_count}")
 
-print("LLM tokenization is based on tokens, not characters or bytes. "
-      "Texts that require more UTF-8 bytes (such as many non-Latin scripts) "
-      "may also use more tokens, which can increase your token bill.")
+print(
+    "LLM tokenization is based on tokens, not characters or bytes. "
+    "Texts that require more UTF-8 bytes (such as many non-Latin scripts) "
+    "may also use more tokens, which can increase your token bill."
+)
 
 list1 = [10, 20, 30]
 list2 = list1
@@ -116,4 +119,6 @@ print("list2:", list2)
 
 print("Same object?", list1 is list2)
 
-print("Both variables reference the same list object, so a change made through one variable is visible through the other.")
+print(
+    "Both variables reference the same list object, so a change made through one variable is visible through the other."
+)

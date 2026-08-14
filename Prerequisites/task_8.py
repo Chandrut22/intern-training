@@ -13,9 +13,7 @@ def extract_json_from_fences(text: str) -> str:
     return match.group(1).strip() if match else text.strip()
 
 
-PHONE_REGEX = re.compile(
-    r"(?<!\d)(?:\(?\d{3}\)?[\s\-\.]*)\d{3}[\s\-\.]*\d{4}(?!\d)"
-)
+PHONE_REGEX = re.compile(r"(?<!\d)(?:\(?\d{3}\)?[\s\-\.]*)\d{3}[\s\-\.]*\d{4}(?!\d)")
 
 
 def redact_phone_numbers(text: str) -> str:
@@ -83,8 +81,6 @@ def run_async_benchmarks() -> tuple[float, float]:
     return time_single, time_twenty
 
 
-
-
 @functools.lru_cache(maxsize=128)
 def count_tokens(text: str) -> int:
     """Simulates a heavy token counter operation with LRU Caching."""
@@ -107,8 +103,8 @@ def verify_lru_cache() -> None:
     res2 = count_tokens(sample_text)
     dur2 = time.perf_counter() - t0
 
-    print(f"\nCache Proof:\n - 1st Call (Miss): {dur1*1000:.3f} ms (Tokens: {res1})")
-    print(f" - 2nd Call (Hit):  {dur2*1000:.3f} ms (Tokens: {res2})")
+    print(f"\nCache Proof:\n - 1st Call (Miss): {dur1 * 1000:.3f} ms (Tokens: {res1})")
+    print(f" - 2nd Call (Hit):  {dur2 * 1000:.3f} ms (Tokens: {res2})")
     print(f" - Speedup ratio: {dur1 / max(dur2, 1e-9):.1f}x faster")
 
 
@@ -121,7 +117,7 @@ def test_cost_calculation():
 
 def test_fence_stripper():
     """Test 2: Verifies fence stripper handles prose, fences, and non-Latin script."""
-    input_text = "Some intro text...\n```json\n{\"status\": \"अमित\"}\n```\nOutro text"
+    input_text = 'Some intro text...\n```json\n{"status": "अमित"}\n```\nOutro text'
     stripped = extract_json_from_fences(input_text)
     assert stripped == '{"status": "अमित"}'
 
@@ -155,8 +151,6 @@ def test_pydantic_json_loading():
         assert True
 
 
-
-
 print("--- 1. Testing Generator (800-char chunks) ---")
 long_string = "A" * 2000
 chunks = list(chunk_text(long_string, chunk_size=800))
@@ -167,5 +161,5 @@ run_async_benchmarks()
 
 print("\n--- 4. LRU Cache Verification ---")
 verify_lru_cache()
-    
+
 print("\nTo run the unit tests with pytest, run:\n       uv run pytest task_8.py")

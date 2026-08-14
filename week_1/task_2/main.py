@@ -27,16 +27,11 @@ messages = [
 ]
 
 
-
-
 # First request
 response = httpx.post(
     URL,
     headers=HEADERS,
-    json={
-        "model": MODEL,
-        "messages": messages
-    },
+    json={"model": MODEL, "messages": messages},
 )
 
 response.raise_for_status()
@@ -47,9 +42,6 @@ message = data["choices"][0]["message"]
 
 print("\nFirst response:")
 print(message)
-
-
-
 
 
 # User asks a follow-up
@@ -67,7 +59,6 @@ response2 = httpx.post(
     json={
         "model": MODEL,
         "messages": messages,
-
     },
 )
 
@@ -79,7 +70,6 @@ print("\nSecond response:")
 print(data2["choices"][0]["message"])
 
 
-
 # User asks a follow-up
 messages = [
     {
@@ -89,7 +79,6 @@ messages = [
 ]
 
 
-
 # Second request
 response3 = httpx.post(
     URL,
@@ -97,7 +86,6 @@ response3 = httpx.post(
     json={
         "model": MODEL,
         "messages": messages,
-
     },
 )
 
@@ -117,9 +105,7 @@ messages = [
     {
         "role": "assistant",
         "content": data3["choices"][0]["message"]["content"],
-        "reasoning_details": data3["choices"][0]["message"].get(
-            "reasoning_details"
-        ),
+        "reasoning_details": data3["choices"][0]["message"].get("reasoning_details"),
     },
     {
         "role": "user",

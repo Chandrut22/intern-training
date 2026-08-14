@@ -45,7 +45,7 @@ def count_tokens(messages: list[dict]) -> int:
         return_tensors=None,
     )
     print(tokenized)
-    return len(tokenized['input_ids'])
+    return len(tokenized["input_ids"])
 
 
 def calculate_cost(
@@ -74,7 +74,7 @@ prompt = {
 
 estimated_prompt_tokens = count_tokens(messages)
 
-logger.info("Estimated prompt tokens (pre-flight): %d",estimated_prompt_tokens)
+logger.info("Estimated prompt tokens (pre-flight): %d", estimated_prompt_tokens)
 
 start_time = time.perf_counter()
 
@@ -116,9 +116,7 @@ input_cost_usd, output_cost_usd, total_cost_usd = calculate_cost(
 total_cost_inr = total_cost_usd * USD_TO_INR
 
 response_cost_inr = (
-    response_cost_usd * USD_TO_INR
-    if response_cost_usd is not None
-    else None
+    response_cost_usd * USD_TO_INR if response_cost_usd is not None else None
 )
 
 logger.info("Model:                             %s", MODEL)

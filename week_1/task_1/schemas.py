@@ -18,7 +18,6 @@ class University(BaseModel):
     country: str
 
 
-
 class RequestModel(BaseModel):
     type: str
     query: str
@@ -85,7 +84,6 @@ class WeatherResponse(BaseModel):
     request: RequestModel
     location: LocationModel
     current: CurrentWeatherModel
-
 
 
 class MetaModel(BaseModel):

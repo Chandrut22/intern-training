@@ -1,5 +1,3 @@
-
-
 from __future__ import annotations
 
 import json
@@ -27,6 +25,7 @@ class TranscriptError(Exception):
 @dataclass
 class Message:
     """One transcript message, decorated with a per-record request ID."""
+
     role: Role
     content: str
     tokens: int
@@ -55,7 +54,10 @@ def load_transcript(path: Path) -> list[dict[str, Any]]:
     except json.JSONDecodeError as exc:
         logger.warning(
             "Malformed JSON in %s at line %d column %d: %s",
-            path, exc.lineno, exc.colno, exc.msg,
+            path,
+            exc.lineno,
+            exc.colno,
+            exc.msg,
         )
         return []
 
@@ -73,7 +75,9 @@ def parse_messages(raw: list[dict[str, Any]]) -> list[Message]:
         try:
             role = Role(entry["role"])
         except (KeyError, ValueError) as exc:
-            logger.warning("Skipping entry with invalid role %r: %s", entry.get("role"), exc)
+            logger.warning(
+                "Skipping entry with invalid role %r: %s", entry.get("role"), exc
+            )
             continue
         out.append(
             Message(
@@ -84,14 +88,15 @@ def parse_messages(raw: list[dict[str, Any]]) -> list[Message]:
         )
 
     if not out:
-        raise TranscriptError(f"No valid messages found in transcript ({len(raw)} entries).")
+        raise TranscriptError(
+            f"No valid messages found in transcript ({len(raw)} entries)."
+        )
     return out
 
 
 def utc_now() -> datetime:
     """Current time as timezone-aware UTC."""
     return datetime.now(timezone.utc)
-
 
 
 def report_totals(messages: list[Message]) -> dict[str, dict[str, int]]:
@@ -128,7 +133,6 @@ def _run(path: Path) -> None:
     print(f"first_request_id: {messages[0].request_id}")
     print(f"totals_per_role : {totals}")
     print(f"report_time_ms  : {elapsed_ms:.3f}")
-
 
 
 print("── good transcript ──")

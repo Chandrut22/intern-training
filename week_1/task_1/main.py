@@ -16,10 +16,21 @@ CURRENCY_API_KEY = os.getenv("CURRENCY_API_KEY")
 
 UniversityList = TypeAdapter(list[University])
 
-def get_universities(client: httpx.Client,name: str,country: str = "",) -> list[University] | None:
+
+def get_universities(
+    client: httpx.Client,
+    name: str,
+    country: str = "",
+) -> list[University] | None:
 
     try:
-        response = client.get("/search",params={"name": name,"country": country,},)
+        response = client.get(
+            "/search",
+            params={
+                "name": name,
+                "country": country,
+            },
+        )
 
         print("URL:", response.url)
         print("Status:", response.status_code)
@@ -39,16 +50,13 @@ def get_universities(client: httpx.Client,name: str,country: str = "",) -> list[
             print(f"Web Pages: {university.web_pages}")
 
         return universities
-    
+
     except httpx.TimeoutException:
         print("University API request timed out.")
         return []
 
     except httpx.HTTPStatusError as e:
-        print(
-            f"University API returned HTTP error: "
-            f"{e.response.status_code}"
-        )
+        print(f"University API returned HTTP error: {e.response.status_code}")
         print("Response:", e.response.text)
         return []
 
@@ -61,14 +69,23 @@ def get_universities(client: httpx.Client,name: str,country: str = "",) -> list[
         return []
 
 
+with httpx.Client(
+    base_url=UNIVERSITY_BASE_URL,
+    timeout=10.0,
+) as client:
+    get_universities(
+        client,
+        name="middle",
+        country="",
+    )
 
-with httpx.Client(base_url=UNIVERSITY_BASE_URL,timeout=10.0,) as client:
-    get_universities(client,name="middle",country="",)
 
-
-def get_india_cities(client: httpx.Client,location:str) -> WeatherResponse | None:
+def get_india_cities(client: httpx.Client, location: str) -> WeatherResponse | None:
     try:
-        response = client.get("/current", params={"access_key":os.getenv("WEATHER_API_KEY"),"query":location})
+        response = client.get(
+            "/current",
+            params={"access_key": os.getenv("WEATHER_API_KEY"), "query": location},
+        )
         print("\nURL:", response.url)
         print("Status:", response.status_code)
         response.raise_for_status()
@@ -101,18 +118,15 @@ def get_india_cities(client: httpx.Client,location:str) -> WeatherResponse | Non
 
             Local Time: {city.location.localtime}
             """)
-        
+
         return city
-    
+
     except httpx.TimeoutException:
         print("API request timed out.")
         return []
 
     except httpx.HTTPStatusError as e:
-        print(
-            f"API returned HTTP error: "
-            f"{e.response.status_code}"
-        )
+        print(f"API returned HTTP error: {e.response.status_code}")
         print("Response:", e.response.text)
         return []
 
@@ -125,14 +139,26 @@ def get_india_cities(client: httpx.Client,location:str) -> WeatherResponse | Non
         return []
 
 
+with httpx.Client(
+    base_url=WEATHER_BASE_URL,
+    timeout=30.0,
+) as client:
+    cities = get_india_cities(client, "Chennai")
 
-with httpx.Client(base_url=WEATHER_BASE_URL,timeout=30.0,) as client:
-        cities = get_india_cities(client,"Chennai")
-        
 
-def get_currency_rate(client: httpx.Client, baseCurrency:str, date: str,currencies:str) -> CurrencyResponse | None:
+def get_currency_rate(
+    client: httpx.Client, baseCurrency: str, date: str, currencies: str
+) -> CurrencyResponse | None:
     try:
-        response = client.get("/v3/historical", params={"base_currency":baseCurrency,"date":date, "currencies":currencies},headers={'apiKey':CURRENCY_API_KEY})
+        response = client.get(
+            "/v3/historical",
+            params={
+                "base_currency": baseCurrency,
+                "date": date,
+                "currencies": currencies,
+            },
+            headers={"apiKey": CURRENCY_API_KEY},
+        )
         print("\nURL:", response.url)
         print("Status:", response.status_code)
         response.raise_for_status()
@@ -144,10 +170,7 @@ def get_currency_rate(client: httpx.Client, baseCurrency:str, date: str,currenci
         return []
 
     except httpx.HTTPStatusError as e:
-        print(
-            f"API returned HTTP error: "
-            f"{e.response.status_code}"
-        )
+        print(f"API returned HTTP error: {e.response.status_code}")
         print("Response:", e.response.text)
         return []
 
@@ -158,9 +181,10 @@ def get_currency_rate(client: httpx.Client, baseCurrency:str, date: str,currenci
     except Exception as e:
         print(f"Unexpected error: {e}")
         return []
-     
-with httpx.Client(base_url=CURRENCY_BASE_URL,timeout=10.0) as client:
-    response = get_currency_rate(client,'USD','2026-08-9','')
+
+
+with httpx.Client(base_url=CURRENCY_BASE_URL, timeout=10.0) as client:
+    response = get_currency_rate(client, "USD", "2026-08-9", "")
     print(f"Last Updated: {response.meta.last_updated_at}")
 
     print("\nCurrencies:")
