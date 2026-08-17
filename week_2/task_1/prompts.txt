@@ -1,0 +1,5 @@
+Write a Python httpx script to call an LLM through OpenRouter and return the model's response.
+Benchmark a batch of LLM requests using both sequential execution and asyncio.gather(). Show total time, throughput, token usage, and estimated cost.
+Generate a prompt larger than a model's 131K-token context window and test how the API handles the request.
+Create five test prompts that evaluate whether an LLM hallucinates information about events, people, or facts outside its knowledge cutoff.
+Analyze this OpenRouter API error and explain the cause, HTTP status code, and how to fix it.
