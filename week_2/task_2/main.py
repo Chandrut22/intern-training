@@ -28,10 +28,9 @@ def print_history(history: list[dict]) -> None:
     if not history:
         print("No history yet.")
         return
-    print("\n--- Conversation History ---")
+    print("\nConversation History")
     for i, msg in enumerate(history, 1):
         print(f"[{i}] {msg['role'].capitalize()}: {msg['content']}")
-    print("----------------------------")
 
 
 def print_stats(used_model: str, prompt_tokens: int, completion_tokens: int, turn_cost: float, running_cost: float) -> None:
