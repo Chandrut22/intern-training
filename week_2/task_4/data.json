@@ -1,0 +1,54 @@
+{
+    "id": "gen-1787214419-HsRqq0nm7IQu6rp6X0R5",
+    "object": "chat.completion",
+    "created": 1787214419,
+    "model": "openai/gpt-oss-20b",
+    "provider": "Parasail",
+    "system_fingerprint": null,
+    "service_tier": null,
+    "choices": [
+        {
+            "index": 0,
+            "logprobs": null,
+            "finish_reason": "stop",
+            "native_finish_reason": "stop",
+            "message": {
+                "role": "assistant",
+                "content": "{\"title\":\"The Future of Open-Weight Models\",\"author\":\"Jane Smith\",\"year\":2021,\"summary\":\"The article discusses how smaller open-weight models are closing the performance gap with large proprietary models.\"}",
+                "refusal": null,
+                "reasoning": "User provides article metadata: title, author, year. We must produce JSON with title, author, year, summary. Provide one-sentence summary. Should be valid JSON. Let's construct:\n\ntitle: \"The Future of Open-Weight Models\"\n\nauthor: \"Jane Smith\"\n\nyear: 2021\n\nsummary: Something like: \"The article discusses how smaller open-weight models are closing the performance gap with large proprietary models.\" That fits.\n\nWe must ensure no additional properties.\n\nReturn JSON only.",
+                "reasoning_details": [
+                    {
+                        "type": "reasoning.text",
+                        "text": "User provides article metadata: title, author, year. We must produce JSON with title, author, year, summary. Provide one-sentence summary. Should be valid JSON. Let's construct:\n\ntitle: \"The Future of Open-Weight Models\"\n\nauthor: \"Jane Smith\"\n\nyear: 2021\n\nsummary: Something like: \"The article discusses how smaller open-weight models are closing the performance gap with large proprietary models.\" That fits.\n\nWe must ensure no additional properties.\n\nReturn JSON only.",
+                        "format": "unknown",
+                        "index": 0
+                    }
+                ]
+            }
+        }
+    ],
+    "usage": {
+        "prompt_tokens": 285,
+        "completion_tokens": 154,
+        "total_tokens": 439,
+        "cost": 3.101e-05,
+        "is_byok": false,
+        "prompt_tokens_details": {
+            "cached_tokens": 64,
+            "cache_write_tokens": 0,
+            "audio_tokens": 0,
+            "video_tokens": 0
+        },
+        "cost_details": {
+            "upstream_inference_cost": 3.101e-05,
+            "upstream_inference_prompt_cost": 7.91e-06,
+            "upstream_inference_completions_cost": 2.31e-05
+        },
+        "completion_tokens_details": {
+            "reasoning_tokens": 121,
+            "image_tokens": 0,
+            "audio_tokens": 0
+        }
+    }
+}
