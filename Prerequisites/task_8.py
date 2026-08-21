@@ -2,7 +2,8 @@ import asyncio
 import functools
 import re
 import time
-from typing import Generator
+from collections.abc import Generator
+
 from pydantic import BaseModel, ValidationError
 
 
@@ -40,7 +41,7 @@ def calculate_cost(
     )
 
 
-def chunk_text(text: str, chunk_size: int = 800) -> Generator[str, None, None]:
+def chunk_text(text: str, chunk_size: int = 800) -> Generator[str]:
     """Yields text in chunks of specified size (default 800 chars)."""
     for i in range(0, len(text), chunk_size):
         yield text[i : i + chunk_size]

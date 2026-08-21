@@ -1,8 +1,7 @@
-from src.token.token_accumulator import TokenAccumulator
 from src.chunk import DocumentChunk
-from src.summarizer import TruncateSummarizer, WordCountSummarizer
 from src.role import Role
-
+from src.summarizer import TruncateSummarizer, WordCountSummarizer
+from src.token.token_accumulator import TokenAccumulator
 
 acc = TokenAccumulator()
 print(f"add 500  -> running cost {acc.add(500)}")

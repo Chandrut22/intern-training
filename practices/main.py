@@ -1,9 +1,10 @@
 import asyncio
-import time
 import os
-from langchain_openrouter import ChatOpenRouter
-from langchain_core.prompts import ChatPromptTemplate
+import time
+
 from dotenv import load_dotenv
+from langchain_core.prompts import ChatPromptTemplate
+from langchain_openrouter import ChatOpenRouter
 
 load_dotenv()
 
@@ -47,7 +48,7 @@ async def main():
     print("\n" + "="*20 + " RESULTS SUMMARY " + "="*20)
     for idx, original_prompt, response_content, latency in results:
         print(f"\n[PROMPT {idx} - {latency:.2f}s]: {original_prompt}")
-        print(f"--- ANSWER ---")
+        print("--- ANSWER ---")
         print(response_content.strip())
         print("-" * 50)
 

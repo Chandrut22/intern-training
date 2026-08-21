@@ -1,5 +1,6 @@
-from src.token import calculate_cost, format_cost
 from decimal import Decimal
+
+from src.token import calculate_cost, format_cost
 
 
 class TokenAccumulator:

@@ -6,10 +6,11 @@ import time
 import uuid
 from collections import Counter, defaultdict
 from dataclasses import dataclass, field
-from datetime import datetime, timezone
-from src.role import Role
+from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any
+
+from src.role import Role
 
 logging.basicConfig(
     level=logging.WARNING,
@@ -96,7 +97,7 @@ def parse_messages(raw: list[dict[str, Any]]) -> list[Message]:
 
 def utc_now() -> datetime:
     """Current time as timezone-aware UTC."""
-    return datetime.now(timezone.utc)
+    return datetime.now(UTC)
 
 
 def report_totals(messages: list[Message]) -> dict[str, dict[str, int]]:

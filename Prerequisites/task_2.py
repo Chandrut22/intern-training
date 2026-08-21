@@ -79,7 +79,7 @@ with open("C:\\Genworx\\intern-training\\prerequisites\\tokens.txt", mode="r") a
         try:
             v = int(token.strip())
             token_counts.append(v)
-        except ValueError as e:
+        except ValueError:
             print(f"Line{i}: '{token.strip()}' is not a valid integer.")
 
 print(f"Valid Integer: {token_counts}")

@@ -1,12 +1,11 @@
-from pydantic import ConfigDict, BaseModel, HttpUrl, Field
-from typing import Optional
-from pydantic import BaseModel
+
+from pydantic import BaseModel, ConfigDict, Field, HttpUrl
 
 
 class University(BaseModel):
     model_config = ConfigDict(populate_by_name=True)
 
-    state_province: Optional[str] = Field(
+    state_province: str | None = Field(
         default=None,
         alias="state-province",
     )

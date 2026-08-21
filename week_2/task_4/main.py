@@ -1,8 +1,9 @@
-import json, re
-import httpx
-from pydantic import BaseModel, ValidationError
-from dotenv import load_dotenv 
+import json
 import os
+
+import httpx
+from dotenv import load_dotenv
+from pydantic import BaseModel, ValidationError
 
 load_dotenv()
 

@@ -1,13 +1,13 @@
-from collections import defaultdict
-from datetime import datetime, timezone
-from decimal import Decimal
 import json
 import logging
-from pathlib import Path
 import re
 import time
-from typing import Any
 import uuid
+from collections import defaultdict
+from datetime import UTC, datetime
+from decimal import Decimal
+from pathlib import Path
+from typing import Any
 
 from pydantic import BaseModel, Field, ValidationError
 
@@ -77,7 +77,7 @@ def process_message_record(raw_record: dict[str, Any]) -> ProcessedMessage | Non
         content=redacted_content,
         tokens=validated.tokens,
         cost=cost,
-        processed_at_utc=datetime.now(timezone.utc),
+        processed_at_utc=datetime.now(UTC),
     )
 
 

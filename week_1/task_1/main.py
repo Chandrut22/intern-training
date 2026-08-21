@@ -1,8 +1,9 @@
-from schemas import University, WeatherResponse, CurrencyResponse
-from pydantic import TypeAdapter
-from dotenv import load_dotenv
-import httpx
 import os
+
+import httpx
+from dotenv import load_dotenv
+from pydantic import TypeAdapter
+from schemas import CurrencyResponse, University, WeatherResponse
 
 load_dotenv()
 
