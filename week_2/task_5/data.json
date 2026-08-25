@@ -1,7 +1,7 @@
 {
-    "id": "gen-1787283228-aaNCKIC24EDenA4EYMgh",
+    "id": "gen-1787305252-beuBlJKJuIB8Uw1rpfCn",
     "object": "chat.completion",
-    "created": 1787283228,
+    "created": 1787305252,
     "model": "openai/gpt-oss-20b",
     "provider": "CoreWeave",
     "system_fingerprint": null,
@@ -14,13 +14,13 @@
             "native_finish_reason": "stop",
             "message": {
                 "role": "assistant",
-                "content": "(125\u202f+\u202f48)\u00b2 = 173\u00b2 = **29,929**.",
+                "content": "\\( (125 + 48)^2 = 173^2 = 29,929 \\).",
                 "refusal": null,
-                "reasoning": "User asked \"What is (125 + 48) ** 2?\" We provided answer 29929. That is correct. We should reply.",
+                "reasoning": "We need to provide answer. Provide calculation result. Let's output.",
                 "reasoning_details": [
                     {
                         "type": "reasoning.text",
-                        "text": "User asked \"What is (125 + 48) ** 2?\" We provided answer 29929. That is correct. We should reply.",
+                        "text": "We need to provide answer. Provide calculation result. Let's output.",
                         "format": "unknown",
                         "index": 0
                     }
@@ -30,23 +30,23 @@
     ],
     "usage": {
         "prompt_tokens": 290,
-        "completion_tokens": 59,
-        "total_tokens": 349,
-        "cost": 1.637e-05,
+        "completion_tokens": 43,
+        "total_tokens": 333,
+        "cost": 1.429e-05,
         "is_byok": false,
         "prompt_tokens_details": {
-            "cached_tokens": 224,
+            "cached_tokens": 64,
             "cache_write_tokens": 0,
             "audio_tokens": 0,
             "video_tokens": 0
         },
         "cost_details": {
-            "upstream_inference_cost": 1.637e-05,
+            "upstream_inference_cost": 1.429e-05,
             "upstream_inference_prompt_cost": 8.7e-06,
-            "upstream_inference_completions_cost": 7.67e-06
+            "upstream_inference_completions_cost": 5.59e-06
         },
         "completion_tokens_details": {
-            "reasoning_tokens": 25,
+            "reasoning_tokens": 17,
             "image_tokens": 0,
             "audio_tokens": 0
         }

@@ -1,9 +1,9 @@
 {
-    "id": "gen-1787227758-sddiFhHvA51iRuSLE2Ur",
+    "id": "gen-1787305510-izklyGPv7Hi6VFwSxE2b",
     "object": "chat.completion",
-    "created": 1787227758,
+    "created": 1787305510,
     "model": "openai/gpt-oss-20b",
-    "provider": "SiliconFlow",
+    "provider": "DeepInfra",
     "system_fingerprint": null,
     "service_tier": null,
     "choices": [
@@ -14,17 +14,25 @@
             "native_finish_reason": "stop",
             "message": {
                 "role": "assistant",
-                "content": "{\"author\":\"Jane Smith\",\"summary\":\"The article examines how smaller open\u2011weight models are narrowing the performance gap with proprietary models.\",\"title\":\"The Future of Open-Weight Models\",\"year\":2021}",
+                "content": "{\n  \"title\": \"The Future of Open-Weight Models\",\n  \"author\": \"Jane Smith\",\n  \"year\": 2021,\n  \"summary\": \"Really insightful stuff about how smaller models are closing the gap with proprietary ones.\"\n}",
                 "refusal": null,
-                "reasoning": null
+                "reasoning": "We have user input: \"I was reading this fascinating piece the other day. It was written by Jane Smith back in 2021 and titled \"The Future of Open-Weight Models\". Really insightful stuff about how smaller models are closing the gap with proprietary ones.\"\n\nWe need to extract metadata: title: \"The Future of Open-Weight Models\". author: Jane Smith. year: 2021. summary: one-sentence summary from description. They say: \"Really insightful stuff about how smaller models are closing the gap with proprietary ones.\" That is a summary. We must produce JSON object strictly matching schema. Ensure no additional properties, keys: title, author, year, summary. All required. Ensure year is integer 2021. Provide summary string. Ensure formatting of JSON, maintain the property order? Not necessary but typical. Provide only JSON. Let's craft.",
+                "reasoning_details": [
+                    {
+                        "type": "reasoning.text",
+                        "text": "We have user input: \"I was reading this fascinating piece the other day. It was written by Jane Smith back in 2021 and titled \"The Future of Open-Weight Models\". Really insightful stuff about how smaller models are closing the gap with proprietary ones.\"\n\nWe need to extract metadata: title: \"The Future of Open-Weight Models\". author: Jane Smith. year: 2021. summary: one-sentence summary from description. They say: \"Really insightful stuff about how smaller models are closing the gap with proprietary ones.\" That is a summary. We must produce JSON object strictly matching schema. Ensure no additional properties, keys: title, author, year, summary. All required. Ensure year is integer 2021. Provide summary string. Ensure formatting of JSON, maintain the property order? Not necessary but typical. Provide only JSON. Let's craft.",
+                        "format": "unknown",
+                        "index": 0
+                    }
+                ]
             }
         }
     ],
     "usage": {
-        "prompt_tokens": 285,
-        "completion_tokens": 41,
-        "total_tokens": 326,
-        "cost": 1.878e-05,
+        "prompt_tokens": 272,
+        "completion_tokens": 236,
+        "total_tokens": 508,
+        "cost": 4.12e-05,
         "is_byok": false,
         "prompt_tokens_details": {
             "cached_tokens": 0,
@@ -33,12 +41,12 @@
             "video_tokens": 0
         },
         "cost_details": {
-            "upstream_inference_cost": 1.878e-05,
-            "upstream_inference_prompt_cost": 1.14e-05,
-            "upstream_inference_completions_cost": 7.38e-06
+            "upstream_inference_cost": 4.12e-05,
+            "upstream_inference_prompt_cost": 8.16e-06,
+            "upstream_inference_completions_cost": 3.304e-05
         },
         "completion_tokens_details": {
-            "reasoning_tokens": 0,
+            "reasoning_tokens": 210,
             "image_tokens": 0,
             "audio_tokens": 0
         }
