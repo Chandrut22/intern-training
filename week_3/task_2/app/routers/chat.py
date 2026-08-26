@@ -65,71 +65,45 @@ async def call_chat(
             detail=str(exc),
         )
 
-
-@router.post("/stream", response_class=EventSourceResponse)
+@router.post(
+    "/stream",
+    response_class=EventSourceResponse,
+)
 async def stream_chat(
     msg: PromptIn,
     db: AsyncSession = Depends(get_db),
-) -> EventSourceResponse:
-
-    messages = [
-        {
-            "role": "user",
-            "content": msg.text,
-        }
-    ]
+) -> AsyncIterable[ServerSentEvent]:
 
     service = ChatService(db=db)
 
-    async def event_generator():
-        full_reply = ""
+    full_reply = ""
 
-        try:
-            async for token in service.stream_chat_completion(messages):
-                full_reply += token
+    async for token in service.stream_chat_completion(
+        [{"role": "user", "content": msg.text}]
+    ):
+        full_reply += token
 
-                yield ServerSentEvent(
-                    data=token,
-                    event="token",
-                )
+        yield ServerSentEvent(
+            data=token,
+            event="token",
+        )
 
-            # Only persist after successful completion
-            conversation_id = await service.persist_exchange(
-                user_id=msg.user_id,
-                conversation_id=msg.conversation_id,
-                user_message=msg.text,
-                assistant_message=full_reply,
-                model="",
-            )
+    conversation_id = await service.persist_exchange(
+        user_id=msg.user_id,
+        conversation_id=msg.conversation_id,
+        user_message=msg.text,
+        assistant_message=full_reply,
+        model="",
+    )
 
-            await db.commit()
+    await db.commit()
 
-            yield ServerSentEvent(
-                data=str(conversation_id),
-                event="conversation_id",
-            )
+    yield ServerSentEvent(
+        data=str(conversation_id),
+        event="conversation_id",
+    )
 
-            yield ServerSentEvent(
-                data="[DONE]",
-                event="done",
-            )
-
-        except httpx.HTTPStatusError as exc:
-
-            await db.rollback()
-
-            yield ServerSentEvent(
-                data=f"OpenRouter API error: {exc.response.text}",
-                event="error",
-            )
-
-        except Exception as exc:
-
-            await db.rollback()
-
-            yield ServerSentEvent(
-                data=str(exc),
-                event="error",
-            )
-
-    return EventSourceResponse(event_generator())
+    yield ServerSentEvent(
+        raw_data="[DONE]",
+        event="done",
+    )
