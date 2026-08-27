@@ -1,0 +1,44 @@
+{
+    "lc": 1,
+    "type": "constructor",
+    "id": [
+        "langchain",
+        "schema",
+        "messages",
+        "AIMessage"
+    ],
+    "kwargs": {
+        "content": "Here are the universities in Canada that match the name \u201cMcGill\u201d:\n\n| # | University | State/Province | Domain | Web page |\n|---|------------|----------------|--------|----------|\n| 1 | **McGill University** | Quebec | `mcgill.ca` | <https://www.mcgill.ca/> |\n\nIf you need more details (e                                                                       e.g., contact info, programs, etc.) or want to search for similar names, just let me know!",
+        "response_metadata": {
+            "model_name": "openai/gpt-oss-20b",
+            "id": "gen-1787737637-HqAbwXXVbxcJ2SL8a3y4",
+            "created": 1787737637,
+            "object": "chat.completion",
+            "finish_reason": "stop",
+            "logprobs": null,
+            "model_provider": "openrouter",
+            "cost": 1.606e-05,
+            "cost_details": {
+                "upstream_inference_completions_cost": 1.04e-05,
+                "upstream_inference_prompt_cost": 5.66e-06,
+                "upstream_inference_cost": 1.606e-05
+            }
+        },
+        "type": "ai",
+        "id": "lc_run--01a03d77-8d3d-73d1-94dc-6747601ef85c-0",
+        "usage_metadata": {
+            "input_tokens": 283,
+            "output_tokens": 104,
+            "total_tokens": 387,
+            "input_token_details": {
+                "cache_read": 0,
+                "cache_creation": 0
+            },
+            "output_token_details": {
+                "reasoning": 0
+            }
+        },
+        "tool_calls": [],
+        "invalid_tool_calls": []
+    }
+}
