@@ -81,36 +81,38 @@ def search_universities(name: str, country: str = "") -> list[dict]:
         return []
 
 
-def search_country_states(name:str) -> dict:
-        try:
-            response = httpx.post(
-                "https://countriesnow.space/api/v0.1/countries/states",
-                json={"country": name},
-                follow_redirects=True,
-                timeout=10.0,
-            )
-            response.raise_for_status()
-            data = response.json()
+def search_country_states(name: str) -> dict:
+    try:
+        response = httpx.post(
+            "https://countriesnow.space/api/v0.1/countries/states",
+            json={"country": name},
+            follow_redirects=True,
+            timeout=10.0,
+        )
+        response.raise_for_status()
+        data = response.json()
 
-            print("Status:", response.status_code)
-            print("URL:", response.url)
-            print("Response:", response.text)
+        print("Status:", response.status_code)
+        print("URL:", response.url)
+        print("Response:", response.text)
 
-            if(data["error"]): return data["msg"]
-            return data["data"]
-    
-        except httpx.TimeoutException:
-            print("API request timed out.")
-            return []
-        except httpx.HTTPStatusError as e:
-            print(f"API returned HTTP error: {e.response.status_code}")
-            return []
-        except httpx.RequestError as e:
-            print(f"API request failed: {e}")
-            return []
-        except Exception as e:
-            print(f"error: {e}")
-            return []
+        if data["error"]:
+            return data["msg"]
+        return data["data"]
+
+    except httpx.TimeoutException:
+        print("API request timed out.")
+        return []
+    except httpx.HTTPStatusError as e:
+        print(f"API returned HTTP error: {e.response.status_code}")
+        return []
+    except httpx.RequestError as e:
+        print(f"API request failed: {e}")
+        return []
+    except Exception as e:
+        print(f"error: {e}")
+        return []
+
 
 def calculate(expression: str) -> float:
     try:
@@ -118,6 +120,7 @@ def calculate(expression: str) -> float:
         return result
     except Exception as e:
         return f"Calculation error: {e}"
+
 
 tools = [
     {
@@ -130,16 +133,16 @@ tools = [
                 "properties": {
                     "name": {
                         "type": "string",
-                        "description": "Name or partial name of the university to search for."
+                        "description": "Name or partial name of the university to search for.",
                     },
                     "country": {
                         "type": "string",
-                        "description": "Optional country name to filter results."
-                    }
+                        "description": "Optional country name to filter results.",
+                    },
                 },
-                "required": ["name"]
-            }
-        }
+                "required": ["name"],
+            },
+        },
     },
     {
         "type": "function",
@@ -151,12 +154,12 @@ tools = [
                 "properties": {
                     "name": {
                         "type": "string",
-                        "description": "Name of the country to search for."
+                        "description": "Name of the country to search for.",
                     }
                 },
-                "required": ["name"]
-            }
-        }
+                "required": ["name"],
+            },
+        },
     },
     {
         "type": "function",
@@ -168,16 +171,20 @@ tools = [
                 "properties": {
                     "expression": {
                         "type": "string",
-                        "description": "Mathematical expression such as '25 * 4 + 10'."
+                        "description": "Mathematical expression such as '25 * 4 + 10'.",
                     }
                 },
-                "required": ["expression"]
-            }
-        }
-    }
+                "required": ["expression"],
+            },
+        },
+    },
 ]
 
-TOOL_MAPPING = {"search_universities": search_universities, "search_country_states":search_country_states,"calculate": calculate}
+TOOL_MAPPING = {
+    "search_universities": search_universities,
+    "search_country_states": search_country_states,
+    "calculate": calculate,
+}
 
 
 def call_llm(messages: list) -> dict:
@@ -188,8 +195,8 @@ def call_llm(messages: list) -> dict:
         timeout=30.0,
     )
     response.raise_for_status()
-    with open("data.json","w") as f:
-        json.dump(response.json(),f,indent=4)
+    with open("data.json", "w") as f:
+        json.dump(response.json(), f, indent=4)
     msg = response.json()["choices"][0]["message"]
     messages.append(msg)
     return msg
@@ -212,13 +219,15 @@ def execute_tool(msg: dict) -> dict:
 
 def run_agent(user_query: str):
     messages = [
-        {"role": "system", "content": "You are a helpful assistant that can search for universities."},
+        {
+            "role": "system",
+            "content": "You are a helpful assistant that can search for universities.",
+        },
         {"role": "user", "content": user_query},
     ]
 
     max_iterations = 10
     for iteration in range(max_iterations):
-    
         msg = call_llm(messages)
         # print(f"--> {msg} <-- {messages}")
 

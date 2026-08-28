@@ -10,14 +10,14 @@ question = "How would you build the tallest building ever?"
 
 url = "https://openrouter.ai/api/v1/chat/completions"
 headers = {
-    "Authorization": f"Bearer {os.getenv("OPEN_ROUTER_KEY")}",
-    "Content-Type": "application/json"
+    "Authorization": f"Bearer {os.getenv('OPEN_ROUTER_KEY')}",
+    "Content-Type": "application/json",
 }
 
 payload = {
     "model": "openai/gpt-oss-20b",
     "messages": [{"role": "user", "content": question}],
-    "stream": True
+    "stream": True,
 }
 
 buffer = ""
@@ -27,21 +27,21 @@ with httpx.stream("POST", url, headers=headers, json=payload) as r:
         print(f"--->{buffer}")
         while True:
             try:
-                line_end = buffer.find('\n')
+                line_end = buffer.find("\n")
                 print(f"--> line_end {line_end}")
                 if line_end == -1:
                     break
 
                 line = buffer[:line_end].strip()
-                buffer = buffer[line_end + 1:]
+                buffer = buffer[line_end + 1 :]
 
                 # Skip SSE comments like ": OPENROUTER PROCESSING"
-                if line.startswith(':'):
+                if line.startswith(":"):
                     continue
 
-                if line.startswith('data: '):
+                if line.startswith("data: "):
                     data = line[6:]
-                    if data == '[DONE]':
+                    if data == "[DONE]":
                         break
 
                     try:

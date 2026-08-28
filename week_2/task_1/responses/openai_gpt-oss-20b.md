@@ -48,7 +48,10 @@ from typing import List, Dict, Any
 # Helper functions
 # --------------------------------------------------------------------------- #
 
-def build_request_body(messages: List[Dict[str, Any]], model: str = "gpt-4o-mini") -> Dict:
+
+def build_request_body(
+    messages: List[Dict[str, Any]], model: str = "gpt-4o-mini"
+) -> Dict:
     """
     Construct the JSON body required by OpenRouter.
     Currently supports a basic chat completion.
@@ -58,6 +61,7 @@ def build_request_body(messages: List[Dict[str, Any]], model: str = "gpt-4o-mini
         "messages": messages,
         # You can extend with other optional fields here (e.g., temperature, max_tokens)
     }
+
 
 def post_completion(body: Dict, stream: bool = False) -> httpx.Response:
     """
@@ -72,23 +76,39 @@ def post_completion(body: Dict, stream: bool = False) -> httpx.Response:
 
     client = httpx.Client(timeout=30.0)
     try:
-        response = client.post(url, json=body, headers=headers, timeout=30.0, stream=stream)
+        response = client.post(
+            url, json=body, headers=headers, timeout=30.0, stream=stream
+        )
         response.raise_for_status()
         return response
     finally:
         client.close()
+
 
 def parse_args(argv: List[str]) -> argparse.Namespace:
     """
     CLI argument parsing.
     """
     parser = argparse.ArgumentParser(description="Simple OpenRouter client via httpx")
-    parser.add_argument("prompt", nargs="?", help="Prompt to send to the model. If omitted, read from stdin.")
-    parser.add_argument("-m", "--model", default="gpt-4o-mini",
-                        help="OpenRouter model to use (default: gpt-4o-mini)")
-    parser.add_argument("-s", "--stream", action="store_true",
-                        help="Stream the reply token‑by‑token (verbose mode)")
+    parser.add_argument(
+        "prompt",
+        nargs="?",
+        help="Prompt to send to the model. If omitted, read from stdin.",
+    )
+    parser.add_argument(
+        "-m",
+        "--model",
+        default="gpt-4o-mini",
+        help="OpenRouter model to use (default: gpt-4o-mini)",
+    )
+    parser.add_argument(
+        "-s",
+        "--stream",
+        action="store_true",
+        help="Stream the reply token‑by‑token (verbose mode)",
+    )
     return parser.parse_args(argv)
+
 
 def main(argv: List[str] | None = None) -> None:
     if argv is None:
@@ -123,7 +143,7 @@ def main(argv: List[str] | None = None) -> None:
                 stream_response = client.post(
                     "https://openrouter.ai/v1/chat/completions",
                     json=body,
-                    timeout=None,           # Let it stream indefinitely if need be
+                    timeout=None,  # Let it stream indefinitely if need be
                     stream=True,
                 )
                 stream_response.raise_for_status()
@@ -135,7 +155,11 @@ def main(argv: List[str] | None = None) -> None:
                             event = json.loads(line)
                             # The exact shape may vary; look for "choices" etc.
                             if "choices" in event and len(event["choices"]) > 0:
-                                token = event["choices"][0].get("delta", {}).get("content", "")
+                                token = (
+                                    event["choices"][0]
+                                    .get("delta", {})
+                                    .get("content", "")
+                                )
                                 if token:
                                     print(token, end="", flush=True)
                         except json.JSONDecodeError:
@@ -155,11 +179,14 @@ def main(argv: List[str] | None = None) -> None:
                 # Fallback: print raw JSON
                 print(json.dumps(resp_json, indent=2))
     except httpx.HTTPStatusError as e:
-        print(f"HTTP error {e.response.status_code}: {e.response.text}", file=sys.stderr)
+        print(
+            f"HTTP error {e.response.status_code}: {e.response.text}", file=sys.stderr
+        )
         sys.exit(1)
     except httpx.RequestError as e:
         print(f"Request failed: {e}", file=sys.stderr)
         sys.exit(1)
+
 
 # --------------------------------------------------------------------------- #
 # Entry point
@@ -250,9 +277,9 @@ from tqdm import tqdm, trange
 #  Config
 # ------------------------------------------------------------------
 MODEL = "gpt-3.5-turbo"
-PROMPT_TOKENS_PER_REQ = 10                   # how many tokens appears in your prompt
-COMPLETION_TOKENS_PER_REQ = 100               # how many tokens you expect the model to return
-NUM_REQUESTS = 60                             # # of calls in your batch
+PROMPT_TOKENS_PER_REQ = 10  # how many tokens appears in your prompt
+COMPLETION_TOKENS_PER_REQ = 100  # how many tokens you expect the model to return
+NUM_REQUESTS = 60  # # of calls in your batch
 # GPT‑3.5‑turbo pricing (2024‑06): 0.002 / 1,000 tokens for prompt & completion
 PROMPT_PRICE_PER_1000 = 0.002
 COMP_PRICE_PER_1000 = 0.002
@@ -269,6 +296,7 @@ prompts: List[str] = [
     BASE_PROMPT.format(f"Hello world number {i}") for i in range(NUM_REQUESTS)
 ]
 
+
 # ------------------------------------------------------------------
 #  Helpers
 # ------------------------------------------------------------------
@@ -279,6 +307,7 @@ def count_tokens(messages: List[Dict]) -> int:
         tokens += len(enc.encode(msg["content"]))
     return tokens
 
+
 async def ask_llm_async(messages: List[Dict]) -> str:
     """Single async request."""
     resp = await openai.ChatCompletion.acreate(
@@ -288,6 +317,7 @@ async def ask_llm_async(messages: List[Dict]) -> str:
     )
     return resp.choices[0].message.content
 
+
 async def ask_llm_sync(messages: List[Dict]) -> str:
     """Single sync request."""
     resp = openai.ChatCompletion.create(
@@ -296,6 +326,7 @@ async def ask_llm_sync(messages: List[Dict]) -> str:
         temperature=0,
     )
     return resp.choices[0].message.content
+
 
 # ------------------------------------------------------------------
 #  Warm‑up
@@ -314,7 +345,7 @@ prompt_tot = 0
 comp_tot = 0
 for p in tqdm(prompts, desc="Seq"):
     messages = [{"role": "user", "content": p}]
-    response = ask_llm_sync(messages)           # blocking
+    response = ask_llm_sync(messages)  # blocking
     # Estimate tokens (we use GPT‑3.5‑turbo metadata if you want, use the response itself)
     prompt_tot += len(enc.encode(p))
     # Rough estimate of completion: we can't know alpha, but we pick the static value we expected
@@ -322,6 +353,7 @@ for p in tqdm(prompts, desc="Seq"):
 end_seq = time.perf_counter()
 seq_duration = end_seq - start_seq
 seq_throughput = NUM_REQUESTS / seq_duration
+
 
 # ------------------------------------------------------------------
 #  Benchmark : ASYNC GATHER (works only on Python ≥ 3.11 for asyncio.run() in Jupyter)
@@ -331,11 +363,12 @@ async def run_async():
     # Using gather to hit the model in parallel (up to the outbound QPS limit)
     coro_list = []
     for p in prompts:
-        msg = [{"role":"user","content":p}]
+        msg = [{"role": "user", "content": p}]
         coro_list.append(ask_llm_async(msg))
     results = await asyncio.gather(*coro_list)
     duration = time.perf_counter() - start
     return duration, results
+
 
 async_duration, _async_resp = asyncio.run(run_async())
 async_throughput = NUM_REQUESTS / async_duration
@@ -351,8 +384,8 @@ total_tokens = total_prompt_tokens + total_completion_tokens
 #  Cost estimate (assuming per‑1_000 tokens)
 # ------------------------------------------------------------------
 estimated_cost = (
-    total_prompt_tokens * PROMPT_PRICE_PER_1000 / 1000 +
-    total_completion_tokens * COMP_PRICE_PER_1000 / 1000
+    total_prompt_tokens * PROMPT_PRICE_PER_1000 / 1000
+    + total_completion_tokens * COMP_PRICE_PER_1000 / 1000
 )
 
 # ------------------------------------------------------------------
@@ -361,7 +394,9 @@ estimated_cost = (
 print("\n=== BENCHMARK ===")
 print(f"Total requested: {NUM_REQUESTS}")
 print(f"Duration              :   seq={seq_duration:.2f}s  async={async_duration:.2f}s")
-print(f"Throughput per second :   seq={seq_throughput:.2f}  async={async_throughput:.2f}")
+print(
+    f"Throughput per second :   seq={seq_throughput:.2f}  async={async_throughput:.2f}"
+)
 print(f"Prompt tokens used    : {total_prompt_tokens:,}")
 print(f"Completion tokens used: {total_completion_tokens:,}")
 print(f"Total tokens          : {total_tokens:,}")
@@ -434,8 +469,8 @@ If you were writing a script to send a real‑world request, you might construct
 ```python
 # NOTE: THIS IS A *SIMPLIFIED* EXAMPLE
 # In reality you would need to encode the prompt as JSON and send it over HTTP.
-MAX_CONTEXT = 131_072          # 131 k tokens (for GPT‑4‑32k, for instance)
-OVERAGE = 5_000                # add a bit of overflow to guarantee >MAX_CONTEXT
+MAX_CONTEXT = 131_072  # 131 k tokens (for GPT‑4‑32k, for instance)
+OVERAGE = 5_000  # add a bit of overflow to guarantee >MAX_CONTEXT
 
 # Create a ridiculously long prompt by repeating a simple sentence
 repeat_unit = "Once upon a time, a curious chatbot explored the limits of a words that felt infinite. "

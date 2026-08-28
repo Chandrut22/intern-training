@@ -1,11 +1,10 @@
 import logging
 import uuid
 
-from fastapi import FastAPI, Request
-
 from app.core.logging import RequestIDFilter
 from app.core.request_context import request_id_ctx
 from app.routers.chat import router as chat_router
+from fastapi import FastAPI, Request
 
 app = FastAPI()
 

@@ -3,6 +3,11 @@ import logging
 from collections.abc import AsyncIterable
 
 import httpx
+from app.core.settings import settings
+from app.repositories.conversation_repo import ConversationRepository
+from app.repositories.message_repo import MessageRepository
+from app.repositories.user_repo import UserRepository
+from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.ext.asyncio import AsyncSession
 from tenacity import (
     retry,
@@ -11,18 +16,10 @@ from tenacity import (
     wait_exponential_jitter,
 )
 
-from app.core.settings import settings
-from app.repositories.conversation_repo import ConversationRepository
-from app.repositories.message_repo import MessageRepository
-from app.repositories.user_repo import UserRepository
-
-from sqlalchemy.dialects.postgresql import UUID
-
 logger = logging.getLogger(__name__)
 
 
 class ChatService:
-
     def __init__(self, db: AsyncSession | None = None):
         self.url = str(settings.OPENROUTER_BASE_URL)
         self.headers = {
@@ -99,8 +96,9 @@ class ChatService:
         if not model_list:
             raise ValueError("No models configured — set MODELS_NAME in .env")
 
-
-        payload = self._build_payload(model_list, messages, temperature, max_token, stream=True)
+        payload = self._build_payload(
+            model_list, messages, temperature, max_token, stream=True
+        )
 
         try:
             async with httpx.AsyncClient(timeout=60.0) as client:
@@ -117,7 +115,7 @@ class ChatService:
                         if not line or not line.startswith("data:"):
                             continue
 
-                        data = line[len("data:"):].strip()
+                        data = line[len("data:") :].strip()
 
                         if data == "[DONE]":
                             return
@@ -165,13 +163,10 @@ class ChatService:
         )
 
         if user is None:
-            raise ValueError(
-                f"User {user_id} does not exist"
-            )
+            raise ValueError(f"User {user_id} does not exist")
 
         # 2. Conversation doesn't exist → create it
         if conversation_id is None:
-
             conversation = await ConversationRepository.create(
                 self.db,
                 user_id=user_id,
@@ -182,23 +177,18 @@ class ChatService:
 
         # 3. Conversation was provided → verify it
         else:
-
             conversation = await ConversationRepository.get_by_id(
                 self.db,
                 conversation_id,
             )
 
             if conversation is None:
-                raise ValueError(
-                    f"Conversation {conversation_id} does not exist"
-                )
+                raise ValueError(f"Conversation {conversation_id} does not exist")
 
             # Important: make sure this conversation belongs
             # to the current user.
             if conversation.user_id != user_id:
-                raise ValueError(
-                    "Conversation does not belong to this user"
-                )
+                raise ValueError("Conversation does not belong to this user")
 
         # 4. Save user message
         await MessageRepository.create(

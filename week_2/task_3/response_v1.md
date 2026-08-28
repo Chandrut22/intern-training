@@ -59,13 +59,12 @@ from typing import List, Dict
 try:
     import openai
 except ImportError as exc:  # pragma: no cover
-    sys.exit(
-        "❌  The `openai` package is required. Run `pip install openai`."
-    )
+    sys.exit("❌  The `openai` package is required. Run `pip install openai`.")
 
 # Configure the OpenRouter endpoint ---------------------------------------------------------
 
 OPENROUTER_API_BASE = "https://openrouter.ai/api/v1"
+
 
 def init_openai() -> None:
     """Initialise the OpenAI SDK to point at OpenRouter."""
@@ -77,7 +76,9 @@ def init_openai() -> None:
     # In case your key is scoped/limited, you might want to set a default model like:
     openai.default_model = "gpt-4o-mini"
 
+
 # Core chatting logic -----------------------------------------------------------------------
+
 
 def chat(
     messages: List[Dict[str, str]],
@@ -118,7 +119,9 @@ def chat(
     # Non‑streaming
     return resp.choices[0].message.content
 
+
 # CLI helper ---------------------------------------------------------------------------------
+
 
 def parse_cli() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Chat with an OpenRouter LLM.")
@@ -145,7 +148,9 @@ def parse_cli() -> argparse.Namespace:
     )
     return parser.parse_args()
 
+
 # Optional: if you want the user to type a quick one‑off prompt
+
 
 def main() -> None:
     init_openai()
@@ -153,12 +158,16 @@ def main() -> None:
 
     # Mock conversation: we start with the system prompt so the model has a context
     conversation = [
-        {"role": "system", "content": "You are a helpful assistant. Keep answers concise."},
+        {
+            "role": "system",
+            "content": "You are a helpful assistant. Keep answers concise.",
+        },
     ]
 
     # If user supplied a conversation file, load it
     if args.message_file:
         import json
+
         with open(args.message_file, "r", encoding="utf-8") as f:
             extra_msgs = json.load(f)
         conversation.extend(extra_msgs)
@@ -184,6 +193,7 @@ def main() -> None:
         print(f"\nAI ({args.model}): {response}\n")
         # Append assistant's reply to the conversation context
         conversation.append({"role": "assistant", "content": response})
+
 
 if __name__ == "__main__":
     main()
@@ -331,13 +341,12 @@ from typing import List, Dict
 try:
     import openai
 except ImportError as exc:  # pragma: no cover
-    sys.exit(
-        "❌  The `openai` package is required. Run `pip install openai`."
-    )
+    sys.exit("❌  The `openai` package is required. Run `pip install openai`.")
 
 # Configure the OpenRouter endpoint ---------------------------------------------------------
 
 OPENROUTER_API_BASE = "https://openrouter.ai/api/v1"
+
 
 def init_openai() -> None:
     """Initialise the OpenAI SDK to point at OpenRouter."""
@@ -349,7 +358,9 @@ def init_openai() -> None:
     # In case your key is scoped/limited, you might want to set a default model like:
     openai.default_model = "gpt-4o-mini"
 
+
 # Core chatting logic -----------------------------------------------------------------------
+
 
 def chat(
     messages: List[Dict[str, str]],
@@ -390,7 +401,9 @@ def chat(
     # Non‑streaming
     return resp.choices[0].message.content
 
+
 # CLI helper ---------------------------------------------------------------------------------
+
 
 def parse_cli() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Chat with an OpenRouter LLM.")
@@ -417,7 +430,9 @@ def parse_cli() -> argparse.Namespace:
     )
     return parser.parse_args()
 
+
 # Optional: if you want the user to type a quick one‑off prompt
+
 
 def main() -> None:
     init_openai()
@@ -425,12 +440,16 @@ def main() -> None:
 
     # Mock conversation: we start with the system prompt so the model has a context
     conversation = [
-        {"role": "system", "content": "You are a helpful assistant. Keep answers concise."},
+        {
+            "role": "system",
+            "content": "You are a helpful assistant. Keep answers concise.",
+        },
     ]
 
     # If user supplied a conversation file, load it
     if args.message_file:
         import json
+
         with open(args.message_file, "r", encoding="utf-8") as f:
             extra_msgs = json.load(f)
         conversation.extend(extra_msgs)
@@ -456,6 +475,7 @@ def main() -> None:
         print(f"\nAI ({args.model}): {response}\n")
         # Append assistant's reply to the conversation context
         conversation.append({"role": "assistant", "content": response})
+
 
 if __name__ == "__main__":
     main()

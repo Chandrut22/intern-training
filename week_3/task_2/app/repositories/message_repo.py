@@ -1,13 +1,11 @@
 from uuid import UUID
 
+from app.models.messages import Message
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.models.messages import Message
-
 
 class MessageRepository:
-
     @staticmethod
     async def create(
         db: AsyncSession,

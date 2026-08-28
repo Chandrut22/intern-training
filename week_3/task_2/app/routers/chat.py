@@ -1,13 +1,12 @@
 from collections.abc import AsyncIterable
 
 import httpx
-from fastapi import APIRouter, Depends, HTTPException, status
-from fastapi.sse import EventSourceResponse, ServerSentEvent
-from sqlalchemy.ext.asyncio import AsyncSession
-
 from app.database.db import get_db
 from app.schemas import PromptIn, PromptOut
 from app.services import ChatService
+from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi.sse import EventSourceResponse, ServerSentEvent
+from sqlalchemy.ext.asyncio import AsyncSession
 
 router = APIRouter(prefix="/chat", tags=["Chat"])
 
@@ -64,6 +63,7 @@ async def call_chat(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail=str(exc),
         )
+
 
 @router.post(
     "/stream",

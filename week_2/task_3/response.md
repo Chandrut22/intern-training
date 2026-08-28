@@ -61,24 +61,25 @@ The idea is that the *prompt* (the first – often dozens to hundreds of tokens 
 ```python
 # 1. Prepare prompt once
 prompt = "Here is a short description of a cat. Please write:"
-tokens = tokenizer.encode(prompt, return_tensors="pt")      # (1, prompt_len)
-emb = model.embed_tokens(tokens)                           # (1, prompt_len, d_model)
+tokens = tokenizer.encode(prompt, return_tensors="pt")  # (1, prompt_len)
+emb = model.embed_tokens(tokens)  # (1, prompt_len, d_model)
 
 # 2. Forward pass to compute key/value
 hidden = emb
 past = {}
 for l, layer in enumerate(model.transformer.h):
     hidden, kv = layer(hidden, past_key_values=none, use_cache=True)
-    past[l] = kv          # kv: (key, value)
+    past[l] = kv  # kv: (key, value)
 
 # 3. Store cache
 prompt_cache[prompt_hash] = {"emb": emb, "past": past}
+
 
 # 4. Subsequent call – reuse cache
 def generate_with_cache(prompt, prompt_hash):
     cache = prompt_cache[prompt_hash]
     generated = model.generate(
-        default_input=None,           # no new prompt tokens
+        default_input=None,  # no new prompt tokens
         past_key_values=cache["past"],
         no_cache=False,
         # other generation args ...
@@ -132,6 +133,7 @@ import torch
 tokenizer = AutoTokenizer.from_pretrained("gpt2")
 model = AutoModelForCausalLM.from_pretrained("gpt2")
 
+
 def cache_prompt(prompt):
     tokens = tokenizer(prompt, return_tensors="pt")
     # forward once, store past key-values
@@ -139,13 +141,14 @@ def cache_prompt(prompt):
         outputs = model(**tokens, use_cache=True)
     return tokens, outputs.past_key_values
 
+
 tokens, past = cache_prompt("Once upon a time in a faraway land, there lived")
 
 generated = model.generate(
-    input_ids=None,          # no new prompt
+    input_ids=None,  # no new prompt
     past_key_values=past,
     max_new_tokens=50,
-    do_sample=True
+    do_sample=True,
 )
 print(tokenizer.decode(generated[0]))
 ```
@@ -216,24 +219,25 @@ The idea is that the *prompt* (the first – often dozens to hundreds of tokens 
 ```python
 # 1. Prepare prompt once
 prompt = "Here is a short description of a cat. Please write:"
-tokens = tokenizer.encode(prompt, return_tensors="pt")      # (1, prompt_len)
-emb = model.embed_tokens(tokens)                           # (1, prompt_len, d_model)
+tokens = tokenizer.encode(prompt, return_tensors="pt")  # (1, prompt_len)
+emb = model.embed_tokens(tokens)  # (1, prompt_len, d_model)
 
 # 2. Forward pass to compute key/value
 hidden = emb
 past = {}
 for l, layer in enumerate(model.transformer.h):
     hidden, kv = layer(hidden, past_key_values=none, use_cache=True)
-    past[l] = kv          # kv: (key, value)
+    past[l] = kv  # kv: (key, value)
 
 # 3. Store cache
 prompt_cache[prompt_hash] = {"emb": emb, "past": past}
+
 
 # 4. Subsequent call – reuse cache
 def generate_with_cache(prompt, prompt_hash):
     cache = prompt_cache[prompt_hash]
     generated = model.generate(
-        default_input=None,           # no new prompt tokens
+        default_input=None,  # no new prompt tokens
         past_key_values=cache["past"],
         no_cache=False,
         # other generation args ...
@@ -287,6 +291,7 @@ import torch
 tokenizer = AutoTokenizer.from_pretrained("gpt2")
 model = AutoModelForCausalLM.from_pretrained("gpt2")
 
+
 def cache_prompt(prompt):
     tokens = tokenizer(prompt, return_tensors="pt")
     # forward once, store past key-values
@@ -294,13 +299,14 @@ def cache_prompt(prompt):
         outputs = model(**tokens, use_cache=True)
     return tokens, outputs.past_key_values
 
+
 tokens, past = cache_prompt("Once upon a time in a faraway land, there lived")
 
 generated = model.generate(
-    input_ids=None,          # no new prompt
+    input_ids=None,  # no new prompt
     past_key_values=past,
     max_new_tokens=50,
-    do_sample=True
+    do_sample=True,
 )
 print(tokenizer.decode(generated[0]))
 ```

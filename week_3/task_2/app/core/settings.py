@@ -1,9 +1,8 @@
 from typing import Annotated, Any
 
+from app.utils.parse import parse_comma_separated_list
 from pydantic import field_validator
 from pydantic_settings import BaseSettings, NoDecode, SettingsConfigDict
-
-from app.utils.parse import parse_comma_separated_list
 
 
 class Settings(BaseSettings):

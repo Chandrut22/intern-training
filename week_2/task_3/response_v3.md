@@ -60,6 +60,7 @@ DEFAULT_MODEL: str = "gpt-4o-mini"
 # Async helpers
 # --------------------------------------------------------------------------- #
 
+
 async def _chat(
     client: httpx.AsyncClient,
     prompt: str,
@@ -156,6 +157,7 @@ async def batch_prompts(
 # --------------------------------------------------------------------------- #
 # Demo / entry point
 # --------------------------------------------------------------------------- #
+
 
 async def main() -> None:
     # Example: read prompts from a text file (one per line).
@@ -264,6 +266,7 @@ DEFAULT_MODEL: str = "gpt-4o-mini"
 # Async helpers
 # --------------------------------------------------------------------------- #
 
+
 async def _chat(
     client: httpx.AsyncClient,
     prompt: str,
@@ -360,6 +363,7 @@ async def batch_prompts(
 # --------------------------------------------------------------------------- #
 # Demo / entry point
 # --------------------------------------------------------------------------- #
+
 
 async def main() -> None:
     # Example: read prompts from a text file (one per line).

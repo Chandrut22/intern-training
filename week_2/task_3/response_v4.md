@@ -109,9 +109,10 @@ async def stream_chat(
 # Running several streams in parallel
 # --------------------------------------------------------------------------
 
+
 async def _print_stream(
     task: AsyncGenerator[str, None],  # the stream generator
-    label: str,                       # label for the console
+    label: str,  # label for the console
 ) -> None:
     """Consume a stream and echo it to the console."""
     async for token in task:
@@ -125,9 +126,7 @@ async def main() -> None:
     Feel free to replace the messages with your own prompts.
     """
     messages1 = [{"role": "user", "content": "Hello, how are you?"}]
-    messages2 = [
-        {"role": "user", "content": "Tell me a joke about cats."}
-    ]
+    messages2 = [{"role": "user", "content": "Tell me a joke about cats."}]
 
     async with httpx.AsyncClient() as client:
         # Create stream generators but *don't* start consuming yet
@@ -316,9 +315,10 @@ async def stream_chat(
 # Running several streams in parallel
 # --------------------------------------------------------------------------
 
+
 async def _print_stream(
     task: AsyncGenerator[str, None],  # the stream generator
-    label: str,                       # label for the console
+    label: str,  # label for the console
 ) -> None:
     """Consume a stream and echo it to the console."""
     async for token in task:
@@ -332,9 +332,7 @@ async def main() -> None:
     Feel free to replace the messages with your own prompts.
     """
     messages1 = [{"role": "user", "content": "Hello, how are you?"}]
-    messages2 = [
-        {"role": "user", "content": "Tell me a joke about cats."}
-    ]
+    messages2 = [{"role": "user", "content": "Tell me a joke about cats."}]
 
     async with httpx.AsyncClient() as client:
         # Create stream generators but *don't* start consuming yet

@@ -44,7 +44,7 @@ try:
 
     # Parse the JSON response
     result = response.json()
-    print("Model's Response:", result['choices'][0]['message']['content'])
+    print("Model's Response:", result["choices"][0]["message"]["content"])
 
 except httpx.RequestError as e:
     print(f"HTTP Request Error: {e}")
@@ -105,7 +105,7 @@ input_prompts = [
     "Translate the following text to French: Hello, how are you?",
     "What is the capital of Peru?",
     "Explain quantum computing in simple terms.",
-    "Summarize this paragraph about AI and machine learning."
+    "Summarize this paragraph about AI and machine learning.",
 ]
 
 # Define the request headers
@@ -113,6 +113,7 @@ headers = {
     "Authorization": f"Bearer {api_key}",
     "Content-Type": "application/json",
 }
+
 
 def make_llm_request(prompt):
     data = {
@@ -125,7 +126,8 @@ def make_llm_request(prompt):
     with httpx.Client() as client:
         response = client.post(url, headers=headers, json=data)
         response.raise_for_status()
-        return response.json()['choices'][0]['message']['content']
+        return response.json()["choices"][0]["message"]["content"]
+
 
 async def async_make_llm_request(prompt):
     data = {
@@ -138,7 +140,8 @@ async def async_make_llm_request(prompt):
     async with httpx.AsyncClient() as client:
         response = await client.post(url, headers=headers, json=data)
         await response.raise_for_status()
-        return response.json()['choices'][0]['message']['content']
+        return response.json()["choices"][0]["message"]["content"]
+
 
 def benchmark_sequential():
     start_time = time.time()
@@ -155,6 +158,7 @@ def benchmark_sequential():
     print(f"Throughput: {throughput:.2f} requests/sec")
     print(f"Token Usage: {token_usage} tokens")
     print(f"Estimated Cost: ${cost:.2f}")
+
 
 async def benchmark_async():
     start_time = time.time()
@@ -173,10 +177,12 @@ async def benchmark_async():
     print(f"Token Usage: {token_usage} tokens")
     print(f"Estimated Cost: ${cost:.2f}")
 
+
 def calculate_cost(token_usage):
     # Simplified cost calculation based on OpenAI's pricing
     token_cost_per_1k = 0.002  # Example rate, may vary based on your plan
     return (token_usage / 1000) * token_cost_per_1k
+
 
 if __name__ == "__main__":
     import time
@@ -252,8 +258,10 @@ model_name = "gpt-3.5-turbo"
 # Generate a large prompt (example: 200K tokens of text)
 large_prompt = " ".join(["word"] * 200000)  # Example of a very large string
 
+
 def split_prompt(prompt, max_tokens=10000):
     import tiktoken
+
     enc = tiktoken.get_encoding("gpt2")
     tokens = enc.encode(prompt)
     chunks = []
@@ -265,6 +273,7 @@ def split_prompt(prompt, max_tokens=10000):
         start = end
     return chunks
 
+
 async def async_make_llm_request(chunk):
     data = {
         "model": model_name,
@@ -274,10 +283,17 @@ async def async_make_llm_request(chunk):
     url = "https://api.openai.com/v1/chat/completions"
 
     async with httpx.AsyncClient() as client:
-        response = await client.post(url, headers={"Authorization": f"Bearer {api_key}", "Content-Type":
-"application/json"}, json=data)
+        response = await client.post(
+            url,
+            headers={
+                "Authorization": f"Bearer {api_key}",
+                "Content-Type": "application/json",
+            },
+            json=data,
+        )
         await response.raise_for_status()
-        return response.json()['choices'][0]['message']['content']
+        return response.json()["choices"][0]["message"]["content"]
+
 
 async def benchmark_large_prompt():
     chunks = split_prompt(large_prompt)
@@ -298,10 +314,12 @@ async def benchmark_large_prompt():
     print(f"Token Usage: {token_usage} tokens")
     print(f"Estimated Cost: ${cost:.2f}")
 
+
 def calculate_cost(token_usage):
     # Simplified cost calculation based on OpenAI's pricing
     token_cost_per_1k = 0.002  # Example rate, may vary based on your plan
     return (token_usage / 1000) * token_cost_per_1k
+
 
 if __name__ == "__main__":
     import time

@@ -52,6 +52,7 @@ DEFAULT_MODEL: str = "openai/gpt-4o-mini"  # e.g. "gpt-4o-mini" through OpenRout
 DEFAULT_TEMP: float = 0.7
 DEFAULT_MAX_TOKENS: int = 500
 
+
 # --------------------------------------------------------------------------- #
 # Helper: Simple wrapper to parse the streaming data lines.
 # --------------------------------------------------------------------------- #
@@ -107,7 +108,9 @@ async def stream_completion(
     # Calling the API
     # ----------------------------------------------------------- #
     try:
-        async with client.stream("POST", BASE_URL, json=payload, headers=headers) as resp:
+        async with client.stream(
+            "POST", BASE_URL, json=payload, headers=headers
+        ) as resp:
             resp.raise_for_status()
 
             usage: Optional[Dict[str, Any]] = None
@@ -134,7 +137,7 @@ async def stream_completion(
                         # b) Metadata that is only available at the very end (if OpenRouter includes it)
                         if usage_data := data.get("usage"):
                             usage = usage_data
-                        if cost_data := data.get("total_cost"):          # new field
+                        if cost_data := data.get("total_cost"):  # new field
                             total_cost = float(cost_data)
                         if model_data := data.get("model"):
                             model_name = model_data
@@ -291,6 +294,7 @@ DEFAULT_MODEL: str = "openai/gpt-4o-mini"  # e.g. "gpt-4o-mini" through OpenRout
 DEFAULT_TEMP: float = 0.7
 DEFAULT_MAX_TOKENS: int = 500
 
+
 # --------------------------------------------------------------------------- #
 # Helper: Simple wrapper to parse the streaming data lines.
 # --------------------------------------------------------------------------- #
@@ -346,7 +350,9 @@ async def stream_completion(
     # Calling the API
     # ----------------------------------------------------------- #
     try:
-        async with client.stream("POST", BASE_URL, json=payload, headers=headers) as resp:
+        async with client.stream(
+            "POST", BASE_URL, json=payload, headers=headers
+        ) as resp:
             resp.raise_for_status()
 
             usage: Optional[Dict[str, Any]] = None
@@ -373,7 +379,7 @@ async def stream_completion(
                         # b) Metadata that is only available at the very end (if OpenRouter includes it)
                         if usage_data := data.get("usage"):
                             usage = usage_data
-                        if cost_data := data.get("total_cost"):          # new field
+                        if cost_data := data.get("total_cost"):  # new field
                             total_cost = float(cost_data)
                         if model_data := data.get("model"):
                             model_name = model_data

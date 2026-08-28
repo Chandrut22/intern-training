@@ -30,7 +30,6 @@ HEADERS = {
 }
 
 
-
 def load_prompts() -> list[str]:
     prompt_file = Path("prompts.txt")
 
@@ -159,13 +158,9 @@ async def process_model(
         else:
             output.append(f"**Response:**\n\n{content}\n\n")
 
-        output.append(
-            f"**Latency:** {result['latency']:.3f}s\n\n"
-        )
+        output.append(f"**Latency:** {result['latency']:.3f}s\n\n")
 
-        output.append(
-            f"**Cost:** ${result['cost']:.8f}\n\n"
-        )
+        output.append(f"**Cost:** ${result['cost']:.8f}\n\n")
 
         output.append("---\n\n")
 
@@ -187,15 +182,12 @@ async def process_model(
     )
 
     total_cost = sum(result["cost"] for result in results)
-    successful_results = [
-        result for result in results if result["content"]
-    ]
+    successful_results = [result for result in results if result["content"]]
 
     if successful_results:
-        avg_latency = sum(
-            result["latency"]
-            for result in successful_results
-        ) / len(successful_results)
+        avg_latency = sum(result["latency"] for result in successful_results) / len(
+            successful_results
+        )
     else:
         avg_latency = 0.0
 
@@ -230,10 +222,9 @@ def create_comparison(results: list[dict]) -> None:
             f"| {result['successful_calls']}/{result['total_calls']} "
         )
 
-
     filename = OUTPUT_DIR / "comparison.md"
 
-    filename.write_text("".join(output),encoding="utf-8")
+    filename.write_text("".join(output), encoding="utf-8")
 
     print(f"[SAVED] {filename}")
 
@@ -241,13 +232,10 @@ def create_comparison(results: list[dict]) -> None:
 async def main():
     prompts = load_prompts()
 
-    OUTPUT_DIR.mkdir(parents=True,exist_ok=True)
+    OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
     async with httpx.AsyncClient(timeout=TIMEOUT) as client:
-        tasks = [
-            process_model(client, model, prompts)
-            for model in MODELS
-        ]
+        tasks = [process_model(client, model, prompts) for model in MODELS]
 
         results = await asyncio.gather(*tasks)
 

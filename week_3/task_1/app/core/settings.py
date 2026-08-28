@@ -1,12 +1,13 @@
 from typing import Annotated, Any
+
 from pydantic import HttpUrl, field_validator
-from pydantic_settings import BaseSettings, SettingsConfigDict, NoDecode
+from pydantic_settings import BaseSettings, NoDecode, SettingsConfigDict
 
 
 class Settings(BaseSettings):
     OPENROUTER_BASE_URL: HttpUrl
     OPENROUTER_API_KEY: str
-    MODELS_NAME: Annotated[list[str], NoDecode]   # <- only real change
+    MODELS_NAME: Annotated[list[str], NoDecode]  # <- only real change
     TEMPERATURE: float
     MAX_TOKEN: int | None = None
 

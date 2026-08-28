@@ -63,18 +63,20 @@ PAYLOAD = {
     "temperature": 0.7,
 }
 
+
 def chat(payload: dict) -> str:
     """
     Send a prompt to OpenRouter and return the assistant’s reply text.
     """
     with httpx.Client() as client:
         response = client.post(URL, headers=HEADERS, json=payload)
-        response.raise_for_status()                 # raise if 4xx/5xx
+        response.raise_for_status()  # raise if 4xx/5xx
         data = response.json()
 
         # A typical OpenAI/ChatCompletion response
         message = data["choices"][0]["message"]["content"]
         return message
+
 
 if __name__ == "__main__":
     reply = chat(PAYLOAD)
@@ -119,6 +121,7 @@ PAYLOAD = {
     "temperature": 0.7,
 }
 
+
 async def chat_async(payload: dict) -> str:
     async with httpx.AsyncClient() as client:
         response = await client.post(URL, headers=HEADERS, json=payload)
@@ -126,9 +129,11 @@ async def chat_async(payload: dict) -> str:
         data = response.json()
         return data["choices"][0]["message"]["content"]
 
+
 async def main():
     reply = await chat_async(PAYLOAD)
     print("Assistant ➜", reply)
+
 
 if __name__ == "__main__":
     asyncio.run(main())
@@ -158,6 +163,7 @@ async def prompt_loop():
         }
         reply = await chat_async(payload)
         print("Assistant:", reply)
+
 
 if __name__ == "__main__":
     asyncio.run(prompt_loop())
@@ -248,18 +254,20 @@ PAYLOAD = {
     "temperature": 0.7,
 }
 
+
 def chat(payload: dict) -> str:
     """
     Send a prompt to OpenRouter and return the assistant’s reply text.
     """
     with httpx.Client() as client:
         response = client.post(URL, headers=HEADERS, json=payload)
-        response.raise_for_status()                 # raise if 4xx/5xx
+        response.raise_for_status()  # raise if 4xx/5xx
         data = response.json()
 
         # A typical OpenAI/ChatCompletion response
         message = data["choices"][0]["message"]["content"]
         return message
+
 
 if __name__ == "__main__":
     reply = chat(PAYLOAD)
@@ -304,6 +312,7 @@ PAYLOAD = {
     "temperature": 0.7,
 }
 
+
 async def chat_async(payload: dict) -> str:
     async with httpx.AsyncClient() as client:
         response = await client.post(URL, headers=HEADERS, json=payload)
@@ -311,9 +320,11 @@ async def chat_async(payload: dict) -> str:
         data = response.json()
         return data["choices"][0]["message"]["content"]
 
+
 async def main():
     reply = await chat_async(PAYLOAD)
     print("Assistant ➜", reply)
+
 
 if __name__ == "__main__":
     asyncio.run(main())
@@ -343,6 +354,7 @@ async def prompt_loop():
         }
         reply = await chat_async(payload)
         print("Assistant:", reply)
+
 
 if __name__ == "__main__":
     asyncio.run(prompt_loop())

@@ -1,10 +1,8 @@
 from collections.abc import AsyncGenerator
 
+from app.core.settings import settings
 from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine
 from sqlalchemy.orm import DeclarativeBase
-
-from app.core.settings import settings
-
 
 engine = create_async_engine(
     settings.DATABASE_URL,
@@ -27,10 +25,9 @@ class Base(DeclarativeBase):
     Base class for all SQLAlchemy ORM models.
     """
 
-    pass
 
 
-async def get_db() -> AsyncGenerator[AsyncSession, None]:
+async def get_db() -> AsyncGenerator[AsyncSession]:
     """
     FastAPI dependency that yields an AsyncSession and rolls back
     on unhandled errors. The session is closed automatically by the

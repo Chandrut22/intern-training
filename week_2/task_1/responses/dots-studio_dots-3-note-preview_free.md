@@ -13,15 +13,16 @@ import httpx
 import json
 import os
 
+
 def call_openrouter_llm(prompt, model="openai/gpt-3.5-turbo", api_key=None):
     """
     Call an LLM through OpenRouter API
-    
+
     Args:
         prompt (str): The prompt to send to the model
         model (str): The model identifier (e.g., "openai/gpt-3.5-turbo")
         api_key (str): OpenRouter API key (optional, will use OPENROUTER_API_KEY env var if not provided)
-    
+
     Returns:
         dict: The full API response
     """
@@ -29,33 +30,28 @@ def call_openrouter_llm(prompt, model="openai/gpt-3.5-turbo", api_key=None):
     if api_key is None:
         api_key = os.getenv("OPENROUTER_API_KEY")
         if not api_key:
-            raise ValueError("OpenRouter API key not found. Set OPENROUTER_API_KEY environment variable or pass api_key parameter.")
-    
+            raise ValueError(
+                "OpenRouter API key not found. Set OPENROUTER_API_KEY environment variable or pass api_key parameter."
+            )
+
     # API endpoint
     url = "https://openrouter.ai/api/v1/chat/completions"
-    
+
     # Headers
-    headers = {
-        "Authorization": f"Bearer {api_key}",
-        "Content-Type": "application/json"
-    }
-    
+    headers = {"Authorization": f"Bearer {api_key}", "Content-Type": "application/json"}
+
     # Request payload
-    data = {
-        "model": model,
-        "messages": [
-            {"role": "user", "content": prompt}
-        ]
-    }
-    
+    data = {"model": model, "messages": [{"role": "user", "content": prompt}]}
+
     # Make the request
     with httpx.Client(timeout=30.0) as client:
         response = client.post(url, headers=headers, json=data)
-        
+
         # Check for errors
         response.raise_for_status()
-        
+
         return response.json()
+
 
 # Example usage
 if __name__ == "__main__":
@@ -63,17 +59,17 @@ if __name__ == "__main__":
         # Call the API
         result = call_openrouter_llm(
             prompt="Explain quantum computing in simple terms",
-            model="openai/gpt-3.5-turbo"
+            model="openai/gpt-3.5-turbo",
         )
-        
+
         # Extract and print the response
         print("Model Response:")
-        print(result['choices'][0]['message']['content'])
-        
+        print(result["choices"][0]["message"]["content"])
+
         # Optional: Print full response for debugging
         print("\nFull API Response:")
         print(json.dumps(result, indent=2))
-        
+
     except httpx.HTTPError as e:
         print(f"HTTP error occurred: {e}")
     except Exception as e:
@@ -141,30 +137,34 @@ import statistics
 from dataclasses import dataclass
 import os
 
+
 # Mock LLM API client - replace with actual client
 class MockLLMClient:
     def __init__(self):
         self.request_count = 0
         self.total_tokens = 0
-        
-    async def generate_response(self, prompt: str, max_tokens: int = 100) -> Dict[str, Any]:
+
+    async def generate_response(
+        self, prompt: str, max_tokens: int = 100
+    ) -> Dict[str, Any]:
         # Simulate API latency
         await asyncio.sleep(0.1 + len(prompt) * 0.001)
-        
+
         # Simulate token usage
         input_tokens = len(prompt.split())
         output_tokens = min(max_tokens, len(prompt) * 2)  # Simulate response length
-        
+
         self.request_count += 1
         self.total_tokens += input_tokens + output_tokens
-        
+
         return {
             "response": f"Response to: {prompt[:50]}...",
             "input_tokens": input_tokens,
             "output_tokens": output_tokens,
             "total_tokens": input_tokens + output_tokens,
-            "latency": 0.1 + len(prompt) * 0.001
+            "latency": 0.1 + len(prompt) * 0.001,
         }
+
 
 @dataclass
 class BenchmarkResult:
@@ -176,13 +176,17 @@ class BenchmarkResult:
     requests_completed: int
     execution_mode: str
 
+
 class LLMBenchmark:
-    def __init__(self, cost_per_input_token: float = 0.000001, 
-                 cost_per_output_token: float = 0.000003):
+    def __init__(
+        self,
+        cost_per_input_token: float = 0.000001,
+        cost_per_output_token: float = 0.000003,
+    ):
         self.cost_per_input_token = cost_per_input_token
         self.cost_per_output_token = cost_per_output_token
         self.client = MockLLMClient()
-        
+
     def generate_prompts(self, num_requests: int = 10) -> List[str]:
         """Generate sample prompts for testing"""
         base_prompts = [
@@ -195,33 +199,33 @@ class LLMBenchmark:
             "Explain climate change to a child.",
             "How to stay productive while working from home?",
             "What are the latest advances in medical technology?",
-            "Discuss the ethics of AI in society."
+            "Discuss the ethics of AI in society.",
         ]
-        
+
         # Repeat and modify prompts to reach desired count
         prompts = []
         for i in range(num_requests):
             prompt = base_prompts[i % len(base_prompts)]
             if i >= len(base_prompts):
-                prompt += f" (Variation {i//len(base_prompts)})"
+                prompt += f" (Variation {i // len(base_prompts)})"
             prompts.append(prompt)
-            
+
         return prompts
-    
+
     async def sequential_execution(self, prompts: List[str]) -> BenchmarkResult:
         """Execute requests sequentially"""
         start_time = time.time()
         responses = []
         latencies = []
-        
+
         for prompt in prompts:
             response = await self.client.generate_response(prompt)
             responses.append(response)
             latencies.append(response["latency"])
-        
+
         end_time = time.time()
         total_time = end_time - start_time
-        
+
         return BenchmarkResult(
             total_time=total_time,
             throughput=len(prompts) / total_time,
@@ -229,25 +233,25 @@ class LLMBenchmark:
             estimated_cost=self._calculate_cost(self.client.total_tokens),
             avg_latency=statistics.mean(latencies),
             requests_completed=len(prompts),
-            execution_mode="Sequential"
+            execution_mode="Sequential",
         )
-    
+
     async def concurrent_execution(self, prompts: List[str]) -> BenchmarkResult:
         """Execute requests concurrently using asyncio.gather"""
         # Reset client state
         self.client = MockLLMClient()
-        
+
         start_time = time.time()
-        
+
         # Create tasks for all requests
         tasks = [self.client.generate_response(prompt) for prompt in prompts]
         responses = await asyncio.gather(*tasks)
-        
+
         end_time = time.time()
         total_time = end_time - start_time
-        
+
         latencies = [response["latency"] for response in responses]
-        
+
         return BenchmarkResult(
             total_time=total_time,
             throughput=len(prompts) / total_time,
@@ -255,18 +259,20 @@ class LLMBenchmark:
             estimated_cost=self._calculate_cost(self.client.total_tokens),
             avg_latency=statistics.mean(latencies),
             requests_completed=len(prompts),
-            execution_mode="Concurrent (asyncio.gather)"
+            execution_mode="Concurrent (asyncio.gather)",
         )
-    
+
     def _calculate_cost(self, total_tokens: int) -> float:
         """Estimate cost based on token usage"""
         # Assuming 60% input tokens, 40% output tokens (rough estimate)
         input_tokens = total_tokens * 0.6
         output_tokens = total_tokens * 0.4
-        
-        return (input_tokens * self.cost_per_input_token + 
-                output_tokens * self.cost_per_output_token)
-    
+
+        return (
+            input_tokens * self.cost_per_input_token
+            + output_tokens * self.cost_per_output_token
+        )
+
     def print_results(self, result: BenchmarkResult):
         """Print benchmark results in a formatted way"""
         print(f"\n=== {result.execution_mode} Results ===")
@@ -276,54 +282,58 @@ class LLMBenchmark:
         print(f"Estimated Cost: ${result.estimated_cost:.6f}")
         print(f"Average Latency: {result.avg_latency:.3f} seconds")
         print(f"Requests Completed: {result.requests_completed}")
-    
+
     async def run_benchmark(self, num_requests: int = 10):
         """Run complete benchmark comparison"""
         print(f"Running benchmark with {num_requests} requests...")
         prompts = self.generate_prompts(num_requests)
-        
+
         # Sequential execution
         print("\nStarting sequential execution...")
         sequential_result = await self.sequential_execution(prompts)
-        
+
         # Concurrent execution
         print("Starting concurrent execution...")
         concurrent_result = await self.concurrent_execution(prompts)
-        
+
         # Print results
         self.print_results(sequential_result)
         self.print_results(concurrent_result)
-        
+
         # Calculate improvement
         speedup = sequential_result.total_time / concurrent_result.total_time
-        throughput_improvement = (concurrent_result.throughput / sequential_result.throughput - 1) * 100
-        
+        throughput_improvement = (
+            concurrent_result.throughput / sequential_result.throughput - 1
+        ) * 100
+
         print(f"\n=== Performance Comparison ===")
         print(f"Speedup: {speedup:.2f}x faster with concurrent execution")
         print(f"Throughput Improvement: {throughput_improvement:.1f}%")
-        print(f"Cost remains same: ${sequential_result.estimated_cost:.6f} (token usage is identical)")
-        
+        print(
+            f"Cost remains same: ${sequential_result.estimated_cost:.6f} (token usage is identical)"
+        )
+
         return {
             "sequential": sequential_result,
             "concurrent": concurrent_result,
             "speedup": speedup,
-            "throughput_improvement": throughput_improvement
+            "throughput_improvement": throughput_improvement,
         }
+
 
 async def main():
     """Main function to run the benchmark"""
     # You can adjust these parameters
     NUM_REQUESTS = 20
-    COST_PER_INPUT = 0.000001    # $1 per million input tokens
-    COST_PER_OUTPUT = 0.000003   # $3 per million output tokens
-    
+    COST_PER_INPUT = 0.000001  # $1 per million input tokens
+    COST_PER_OUTPUT = 0.000003  # $3 per million output tokens
+
     benchmark = LLMBenchmark(
-        cost_per_input_token=COST_PER_INPUT,
-        cost_per_output_token=COST_PER_OUTPUT
+        cost_per_input_token=COST_PER_INPUT, cost_per_output_token=COST_PER_OUTPUT
     )
-    
+
     results = await benchmark.run_benchmark(NUM_REQUESTS)
-    
+
     # Save results to file
     results_dict = {
         "timestamp": time.time(),
@@ -331,13 +341,14 @@ async def main():
         "sequential": vars(results["sequential"]),
         "concurrent": vars(results["concurrent"]),
         "speedup": results["speedup"],
-        "throughput_improvement": results["throughput_improvement"]
+        "throughput_improvement": results["throughput_improvement"],
     }
-    
+
     with open("llm_benchmark_results.json", "w") as f:
         json.dump(results_dict, f, indent=2)
-    
+
     print(f"\nResults saved to llm_benchmark_results.json")
+
 
 if __name__ == "__main__":
     asyncio.run(main())

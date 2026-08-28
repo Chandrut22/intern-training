@@ -1,10 +1,10 @@
-import os
-from langchain.chat_models import init_chat_model
-from langchain_openrouter import ChatOpenRouter
-from dotenv import load_dotenv
-from langchain.tools import tool
-import httpx
 import json
+import os
+
+import httpx
+from dotenv import load_dotenv
+from langchain.chat_models import init_chat_model
+from langchain.tools import tool
 
 load_dotenv()
 
@@ -46,7 +46,6 @@ def search_universities(name: str, country: str = ""):
         )
         response.raise_for_status()
 
-
         return response.json()
 
     except httpx.TimeoutException:
@@ -65,7 +64,12 @@ def search_universities(name: str, country: str = ""):
 
 model_with_tool = model.bind_tools([search_universities])
 
-messages = [{"role": "user", "content": "Find universities in Canada with 'McGill' in the name."}]
+messages = [
+    {
+        "role": "user",
+        "content": "Find universities in Canada with 'McGill' in the name.",
+    }
+]
 ai_msg = model_with_tool.invoke(messages)
 
 messages.append(ai_msg)
@@ -82,15 +86,9 @@ response = model_with_tool.invoke(messages)
 #     print(f"Tool: {tool_call['name']}")
 #     print(f"Args: {tool_call['args']}")
 
-with open("data.json","w") as file:
+with open("data.json", "w") as file:
     # f.writelines(response.to_json()
-    json.dump(response.to_json(),file,indent=4)
+    json.dump(response.to_json(), file, indent=4)
 
 
-print("\n",messages)
-
-
-
-
-
-
+print("\n", messages)

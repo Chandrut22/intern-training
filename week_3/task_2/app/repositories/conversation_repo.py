@@ -1,13 +1,11 @@
 from uuid import UUID
 
+from app.models.conversations import Conversation
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.models.conversations import Conversation
-
 
 class ConversationRepository:
-
     @staticmethod
     async def create(
         db: AsyncSession,
@@ -32,9 +30,7 @@ class ConversationRepository:
     ) -> Conversation | None:
 
         result = await db.execute(
-            select(Conversation).where(
-                Conversation.id == conversation_id
-            )
+            select(Conversation).where(Conversation.id == conversation_id)
         )
 
         return result.scalar_one_or_none()

@@ -1,7 +1,8 @@
-from app.database.db import Base
-from sqlalchemy.orm import mapped_column, relationship
-from sqlalchemy import ForeignKey, UUID, String, DateTime, func
 import uuid
+
+from app.database.db import Base
+from sqlalchemy import UUID, DateTime, ForeignKey, String, func
+from sqlalchemy.orm import mapped_column, relationship
 
 
 class Conversation(Base):

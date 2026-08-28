@@ -1,9 +1,10 @@
-from fastapi import APIRouter, Depends, HTTPException, status
 from collections.abc import AsyncIterable
-from fastapi.sse import EventSourceResponse, ServerSentEvent
-from app.schemas import PromptIn, ChatMessage
-from app.services import ChatService
+
 import httpx
+from app.schemas import ChatMessage, PromptIn
+from app.services import ChatService
+from fastapi import APIRouter, HTTPException, status
+from fastapi.sse import EventSourceResponse, ServerSentEvent
 
 router = APIRouter(prefix="/chat", tags=["Chat"])
 
@@ -14,20 +15,23 @@ async def call_chat(msg: PromptIn) -> list[ChatMessage]:
     try:
         messages = [{"role": "user", "content": msg.text}]
         response = await ChatService().get_chat_completion(messages)
-        messages.append({"role": "assistant", "content": response["choices"][0]["message"]["content"]})
+        messages.append(
+            {
+                "role": "assistant",
+                "content": response["choices"][0]["message"]["content"],
+            }
+        )
         return [ChatMessage(**m) for m in messages]
 
     except httpx.HTTPStatusError as exc:
         raise HTTPException(
             status_code=exc.response.status_code,
-            detail=f"OpenRouter API error: {exc.response.text}"
+            detail=f"OpenRouter API error: {exc.response.text}",
         )
     except Exception as e:
         raise HTTPException(
-            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail=str(e)
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(e)
         )
-
 
 
 @router.post("/stream", response_class=EventSourceResponse)

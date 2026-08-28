@@ -1,0 +1,43 @@
+{
+    "name": null,
+    "input_variables": [
+        "shape"
+    ],
+    "optional_variables": [],
+    "output_parser": null,
+    "partial_variables": {},
+    "metadata": null,
+    "tags": null,
+    "examples": [
+        {
+            "shape": "Square",
+            "sides": "Eight (8)"
+        },
+        {
+            "shape": "Triangle",
+            "sides": "Six (6)"
+        }
+    ],
+    "example_selector": null,
+    "validate_template": false,
+    "example_prompt": {
+        "name": null,
+        "input_variables": [
+            "shape",
+            "sides"
+        ],
+        "optional_variables": [],
+        "output_parser": null,
+        "partial_variables": {},
+        "metadata": null,
+        "tags": null,
+        "template": "Shape: {shape}\nSides: {sides}\n",
+        "template_format": "f-string",
+        "validate_template": false
+    },
+    "suffix": "Shape: {shape}",
+    "example_separator": "\n\n",
+    "prefix": "Understand the pattern and provide me the response for my query.",
+    "template_format": "f-string",
+    "_type": "few_shot"
+}

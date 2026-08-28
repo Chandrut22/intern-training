@@ -1,13 +1,14 @@
 from pydantic import BaseModel
 
+
 class PromptIn(BaseModel):
-    text:str
+    text: str
+
 
 class PromptOut(BaseModel):
-    text:str
+    text: str
 
 
 class ChatMessage(BaseModel):
     role: str
     content: str
-

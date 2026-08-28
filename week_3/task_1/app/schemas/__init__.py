@@ -1,7 +1,3 @@
-from app.schemas.chat_schemas import PromptIn, PromptOut, ChatMessage
+from app.schemas.chat_schemas import ChatMessage, PromptIn, PromptOut
 
-__all__ = [
-    "PromptIn",
-    "PromptOut",
-    "ChatMessage"
-]
+__all__ = ["ChatMessage", "PromptIn", "PromptOut"]

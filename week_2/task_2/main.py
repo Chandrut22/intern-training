@@ -33,13 +33,23 @@ def print_history(history: list[dict]) -> None:
         print(f"[{i}] {msg['role'].capitalize()}: {msg['content']}")
 
 
-def print_stats(used_model: str, prompt_tokens: int, completion_tokens: int, turn_cost: float, running_cost: float) -> None:
+def print_stats(
+    used_model: str,
+    prompt_tokens: int,
+    completion_tokens: int,
+    turn_cost: float,
+    running_cost: float,
+) -> None:
     print(f"\n[Model: {used_model}]")
-    print(f"[Tokens: prompt={prompt_tokens} | completion={completion_tokens} | total={prompt_tokens + completion_tokens}]")
+    print(
+        f"[Tokens: prompt={prompt_tokens} | completion={completion_tokens} | total={prompt_tokens + completion_tokens}]"
+    )
     print(f"[Cost: turn=${turn_cost:.6f} | running=${running_cost:.6f}]")
 
 
-async def stream_response(client: httpx.AsyncClient,history: list[dict]) -> tuple[str, float, str, int, int]:
+async def stream_response(
+    client: httpx.AsyncClient, history: list[dict]
+) -> tuple[str, float, str, int, int]:
     payload = {
         "models": MODELS,
         "messages": history,
@@ -53,11 +63,17 @@ async def stream_response(client: httpx.AsyncClient,history: list[dict]) -> tupl
     completion_tokens = 0
 
     try:
-        async with client.stream("POST", URL, headers=HEADERS, json=payload, timeout=None) as response:
+        async with client.stream(
+            "POST", URL, headers=HEADERS, json=payload, timeout=None
+        ) as response:
             if response.status_code != 200:
                 error_body = await response.aread()
                 try:
-                    error_msg = json.loads(error_body).get("error", {}).get("message", "Unknown API error")
+                    error_msg = (
+                        json.loads(error_body)
+                        .get("error", {})
+                        .get("message", "Unknown API error")
+                    )
                 except json.JSONDecodeError:
                     error_msg = error_body.decode(errors="replace")
                 print(f"\nRequest failed ({response.status_code}): {error_msg}")
@@ -73,14 +89,16 @@ async def stream_response(client: httpx.AsyncClient,history: list[dict]) -> tupl
 
                 try:
                     parsed = json.loads(data)
-                    with open("data.json","w+") as file:
-                        json.dump(parsed,file,indent=4)
-                        
+                    with open("data.json", "w+") as file:
+                        json.dump(parsed, file, indent=4)
+
                 except json.JSONDecodeError:
                     continue
 
                 if "error" in parsed:
-                    print(f"\nStream error: {parsed['error'].get('message', 'Unknown stream error')}")
+                    print(
+                        f"\nStream error: {parsed['error'].get('message', 'Unknown stream error')}"
+                    )
                     return "", 0.0, used_model, prompt_tokens, completion_tokens
 
                 if parsed.get("model"):
@@ -144,9 +162,13 @@ async def main() -> None:
             history.append({"role": "user", "content": prompt})
             print("Assistant: ", end="", flush=True)
 
-            assistant_text, turn_cost, used_model, prompt_tokens, completion_tokens = (
-                await stream_response(client, history)
-            )
+            (
+                assistant_text,
+                turn_cost,
+                used_model,
+                prompt_tokens,
+                completion_tokens,
+            ) = await stream_response(client, history)
 
             print()  # newline after streamed response
 
@@ -156,7 +178,9 @@ async def main() -> None:
 
             history.append({"role": "assistant", "content": assistant_text})
             running_cost += turn_cost
-            print_stats(used_model, prompt_tokens, completion_tokens, turn_cost, running_cost)
+            print_stats(
+                used_model, prompt_tokens, completion_tokens, turn_cost, running_cost
+            )
 
 
 if __name__ == "__main__":
