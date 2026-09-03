@@ -1,0 +1,240 @@
+FastAPI is a modern Python framework for building web APIs.
+FastAPI uses Python type hints to validate request data.
+FastAPI applications can define routes using decorators.
+FastAPI automatically generates OpenAPI documentation.
+Pydantic models are commonly used for data validation in FastAPI.
+Dependency injection helps manage reusable components in FastAPI.
+FastAPI supports asynchronous request handlers.
+Uvicorn is commonly used to run FastAPI applications.
+HTTP requests contain methods, headers, and optional bodies.
+GET requests are commonly used to retrieve resources.
+POST requests are commonly used to create resources.
+PUT requests can replace an existing resource.
+PATCH requests can partially update an existing resource.
+DELETE requests are used to remove resources.
+HTTP status codes describe the result of a request.
+A 200 status code indicates a successful request.
+A 201 status code indicates that a resource was created.
+A 400 status code indicates an invalid client request.
+A 401 status code indicates missing or invalid authentication.
+A 404 status code indicates that a resource was not found.
+A 500 status code indicates an internal server error.
+JSON is commonly used for transferring API data.
+REST APIs organize resources around predictable URLs.
+API endpoints expose functionality through HTTP requests.
+Request validation prevents invalid data from reaching business logic.
+Response models control the structure of API responses.
+Middleware can process requests before they reach route handlers.
+CORS controls which web applications can access an API.
+Authentication verifies the identity of a user.
+Authorization determines what an authenticated user can access.
+JWT tokens can be used to authenticate API requests.
+Access tokens are usually short lived.
+Refresh tokens can be used to obtain new access tokens.
+Passwords should never be stored as plain text.
+Password hashing protects stored credentials from direct exposure.
+Argon2 is a password hashing algorithm designed for security.
+Bcrypt is another commonly used password hashing algorithm.
+OAuth allows applications to delegate authorization to another service.
+OpenID Connect adds identity information on top of OAuth.
+An authorization code can be exchanged for an access token.
+HTTPS encrypts communication between clients and servers.
+TLS protects data while it travels across a network.
+A database stores structured application information.
+PostgreSQL is a powerful relational database system.
+MySQL is another widely used relational database system.
+Relational databases organize data into tables.
+A table contains rows and columns.
+A primary key uniquely identifies a database record.
+A foreign key connects records between related tables.
+Database constraints help maintain data integrity.
+Indexes improve the speed of database queries.
+Too many indexes can increase the cost of write operations.
+SQL is used to query and modify relational databases.
+SELECT statements retrieve data from database tables.
+INSERT statements add new records to a table.
+UPDATE statements modify existing records.
+DELETE statements remove records from a table.
+JOIN operations combine data from multiple tables.
+INNER JOIN returns records that match between tables.
+LEFT JOIN preserves records from the left table.
+Transactions group multiple database operations into one unit.
+Transactions can be committed or rolled back.
+ACID properties help databases maintain reliable transactions.
+SQLAlchemy is a popular Python database toolkit.
+SQLAlchemy supports object relational mapping.
+ORM models represent database tables as Python classes.
+Database sessions manage interactions with the database.
+Alembic is commonly used for SQLAlchemy migrations.
+Database migrations track changes to database schemas.
+Connection pooling allows database connections to be reused.
+Redis is an in-memory data store.
+Redis can be used for caching frequently accessed data.
+Redis can store temporary authentication information.
+Redis supports key expiration for temporary data.
+Caching can reduce repeated database queries.
+A cache should have an appropriate expiration strategy.
+Background tasks allow work to run outside the main request flow.
+Celery is commonly used for distributed background jobs.
+Message queues allow services to communicate asynchronously.
+WebSockets provide persistent two-way communication.
+Chat applications can use WebSockets for real-time messaging.
+A WebSocket connection remains open between the client and server.
+Servers can send messages to connected WebSocket clients.
+Real-time systems require careful connection management.
+A session represents a user's interaction with an application.
+Session data can be stored in a database or cache.
+Session expiration helps limit inactive sessions.
+Cookies can store session identifiers in web applications.
+Secure cookies reduce the risk of cookie theft.
+HttpOnly cookies prevent JavaScript from reading cookie values.
+The SameSite cookie attribute helps reduce cross-site request attacks.
+Frontend applications communicate with backend APIs.
+React is a popular JavaScript library for building interfaces.
+Vite provides a fast development environment for frontend projects.
+TypeScript adds static typing to JavaScript applications.
+Components are reusable building blocks in React.
+React state represents data that can change over time.
+React props allow data to be passed between components.
+TanStack Query manages asynchronous server state in React.
+Tailwind CSS provides utility classes for styling interfaces.
+Frontend routing controls navigation between application pages.
+Forms collect user input from frontend applications.
+Client-side validation provides immediate feedback to users.
+Server-side validation remains necessary for security.
+Postman can be used to test HTTP APIs.
+Automated tests help detect software regressions.
+Unit tests usually test small pieces of application logic.
+Integration tests verify interactions between multiple components.
+End-to-end tests validate complete application workflows.
+Pytest is a popular Python testing framework.
+Fixtures provide reusable setup data for tests.
+Mocking replaces external dependencies during testing.
+Logging helps developers diagnose application failures.
+Structured logs make production debugging easier.
+Request identifiers can connect logs belonging to one request.
+Error handling should provide useful information without leaking secrets.
+Environment variables can store configuration values.
+Secret keys should not be hardcoded in source code.
+Configuration management separates application settings from code.
+Docker packages applications into portable containers.
+Docker images contain application dependencies and runtime requirements.
+Docker Compose can run multiple services together.
+A backend container can communicate with a PostgreSQL container.
+Container health checks can detect unavailable services.
+Kubernetes can orchestrate containers across multiple machines.
+Load balancing distributes traffic across multiple servers.
+Horizontal scaling adds more application instances.
+Vertical scaling increases the resources of an existing server.
+Reverse proxies can forward requests to backend applications.
+Nginx is commonly used as a reverse proxy.
+TLS certificates enable secure HTTPS connections.
+Let's Encrypt provides publicly trusted TLS certificates.
+A domain name identifies a service on the internet.
+DNS translates domain names into IP addresses.
+TCP provides reliable communication between network endpoints.
+A TCP connection begins with a handshake.
+The TCP handshake uses SYN and ACK messages.
+HTTP usually runs over TCP in traditional web architectures.
+Network latency affects application response time.
+Timeouts prevent requests from waiting indefinitely.
+Retries can recover from temporary network failures.
+Retry policies should avoid overwhelming unavailable services.
+Rate limiting controls how frequently clients can access an API.
+Authentication rate limits can reduce brute force attacks.
+Input sanitization reduces risks from malicious input.
+SQL injection attacks exploit unsafe database queries.
+Parameterized queries help prevent SQL injection.
+Cross-site scripting attacks involve malicious browser scripts.
+Content security policies can reduce script injection risks.
+Machine learning allows systems to learn patterns from data.
+Supervised learning uses labeled training examples.
+Unsupervised learning discovers patterns without labeled outputs.
+Classification predicts categories from input data.
+Regression predicts continuous numerical values.
+Clustering groups similar data points together.
+Training adjusts model parameters using examples.
+Inference uses a trained model to generate predictions.
+A model can overfit when it memorizes training data.
+Regularization can reduce overfitting.
+A validation dataset helps evaluate model generalization.
+A test dataset measures performance on unseen examples.
+Accuracy measures the fraction of correct predictions.
+Precision measures the correctness of positive predictions.
+Recall measures how many relevant positive examples were found.
+F1 score balances precision and recall.
+Natural language processing focuses on understanding human language.
+Tokenization splits text into smaller units.
+Tokens are the basic units processed by language models.
+Embeddings represent text as numerical vectors.
+Semantically similar sentences tend to have nearby embeddings.
+Vector databases store and search embedding vectors.
+Cosine similarity measures the angle between two vectors.
+Nearest neighbor search retrieves vectors closest to a query.
+Semantic search retrieves information based on meaning.
+Keyword search retrieves information based mainly on matching words.
+Semantic search can find relevant documents with different wording.
+Keyword search can perform well for exact technical identifiers.
+Retrieval augmented generation combines search with language generation.
+A retriever selects relevant documents for a user query.
+A language model can generate answers using retrieved context.
+Prompt engineering improves the instructions given to language models.
+Large language models generate text based on learned patterns.
+Inference is the process of running a trained model.
+Temperature can influence the randomness of generated responses.
+Streaming allows generated tokens to be returned incrementally.
+Token limits restrict how much text a model can process.
+Prompt caching can reduce repeated computation for common prompts.
+Key value caching can speed up autoregressive generation.
+Model latency depends on model size and hardware.
+GPU acceleration can significantly improve machine learning inference.
+Vector similarity can be calculated efficiently with NumPy.
+NumPy provides efficient operations on numerical arrays.
+Matrix multiplication can calculate similarities between vectors.
+Sorting similarity scores produces a ranked result list.
+Top-k search returns the k highest scoring results.
+Embeddings can have hundreds or thousands of dimensions.
+Normalization makes vector similarity calculations more consistent.
+A corpus is a collection of documents or sentences.
+A query is the text used to search a corpus.
+A semantic search pipeline first embeds the query.
+The query embedding is compared with corpus embeddings.
+The highest similarity scores represent the nearest neighbors.
+Search quality depends on the embedding model.
+Different embedding models can produce different rankings.
+Domain-specific data may require specialized embedding models.
+Evaluation datasets help measure retrieval quality.
+Precision at k measures relevant results among the top k results.
+Recall at k measures retrieved relevant documents among the top k results.
+Mean reciprocal rank evaluates the position of the first relevant result.
+A good search system should return relevant results quickly.
+Software architecture defines how application components interact.
+Layered architecture separates responsibilities between components.
+Service layers usually contain application business logic.
+Repository layers can isolate database operations.
+Dependency inversion reduces coupling between components.
+Clean code improves readability and maintainability.
+Type hints make Python code easier to understand.
+Static analysis can identify potential programming errors.
+Version control tracks changes to source code.
+Git is widely used for version control.
+Branches allow developers to work on features independently.
+Pull requests support code review workflows.
+Continuous integration automatically runs checks on code changes.
+Continuous deployment can automatically release validated changes.
+Monitoring helps teams understand production system behavior.
+Metrics measure system performance and resource usage.
+Distributed tracing follows requests across multiple services.
+Observability combines logs, metrics, and traces.
+Scalable systems must handle increasing amounts of traffic.
+Reliable systems should recover gracefully from failures.
+Fault tolerance reduces the impact of component failures.
+Idempotent operations can safely be repeated.
+API documentation helps developers understand available endpoints.
+OpenAPI provides a standard format for describing APIs.
+Good API design uses consistent naming conventions.
+Versioning allows APIs to evolve without breaking existing clients.
+Pagination prevents large datasets from being returned at once.
+Filtering allows clients to request specific records.
+Sorting allows clients to control result ordering.
+Production systems require security, monitoring, testing, and backups.
