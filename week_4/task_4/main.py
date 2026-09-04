@@ -7,6 +7,7 @@ from langchain_openai import OpenAIEmbeddings
 from dotenv import load_dotenv
 import os
 from langchain_core.prompts import ChatPromptTemplate
+from operator import itemgetter
 import pypdf
 
 load_dotenv()
@@ -23,7 +24,7 @@ def load_pdf_pages(file_path: str) -> list[Document]:
         for i, page in enumerate(reader.pages)
     ]
 
-file_path = r"C:\Genworx\intern-training\week_4\practices\Document.pdf"
+file_path = r"C:\Genworx\intern-training\week_4\task_4\Document.pdf"
 
 docs = load_pdf_pages(file_path)
 
@@ -101,8 +102,7 @@ print("Model Initialized")
 def format_docs(docs):
     print(type(docs))
     for i, doc in enumerate(docs):
-        print(f"\n--- Document {i + 1} ---")
-        print(f"ID: {doc.id}")
+        print(f"\nID: {doc.id}")
         print(f"Metadata: {doc.metadata}")
         print(f"Content:\n{doc.page_content}")
     return "\n\n".join(
@@ -110,7 +110,6 @@ def format_docs(docs):
         for doc in docs
     )
 
-from operator import itemgetter
 
 rag_chain = (
     {
@@ -125,7 +124,7 @@ rag_chain = (
 response = rag_chain.invoke({"input": "give the code RAG using langchain LCEL"})
 print(response)
 
-print("-" * 60)
+print("-" * 120)
 
 response = rag_chain.invoke({"input": "give the TODO List code in react"})
 print(response)

@@ -7,32 +7,34 @@ from langchain_openai import OpenAIEmbeddings
 from dotenv import load_dotenv
 import os
 from langchain_core.prompts import ChatPromptTemplate
+from langchain_core.messages.utils import trim_messages
+from langchain_core.messages import HumanMessage, AIMessage
+from langchain_core.runnables import RunnableLambda
+from operator import itemgetter
 import pypdf
+
 
 load_dotenv()
 
 os.environ["OPENROUTER_API_KEY"] = os.getenv("OPEN_ROUTER_KEY")
+
 
 def load_pdf_pages(file_path: str) -> list[Document]:
     reader = pypdf.PdfReader(file_path)
     return [
         Document(
             page_content=page.extract_text() or "",
-            metadata={"source": file_path, "page": i, "id": i + 1},
+            metadata={"source": file_path, "page": i, "id":i+1},
         )
         for i, page in enumerate(reader.pages)
     ]
 
 file_path = r"C:\Genworx\intern-training\week_4\practices\Document.pdf"
-
 docs = load_pdf_pages(file_path)
 
 text_splitter = RecursiveCharacterTextSplitter(
-    chunk_size=1000,
-    chunk_overlap=200,
-    add_start_index=True
+    chunk_size=1000, chunk_overlap=200, add_start_index=True
 )
-
 all_splits = text_splitter.split_documents(docs)
 
 print(f"Documents: {len(docs)}")
@@ -44,7 +46,7 @@ for i, chunk in enumerate(all_splits[:5]):
     print(chunk.metadata)
 
 embeddings = OpenAIEmbeddings(
-    model="openai/text-embedding-3-small",
+    model="openai/text-embedding-3-small",  # Your Azure deployment name
     base_url="https://openrouter.ai/api/v1",
     api_key=os.getenv("OPEN_ROUTER_KEY")
 )
@@ -57,10 +59,8 @@ vector_store = PGVector(
     pre_delete_collection=True
 )
 
-vector_store.add_documents(
-    all_splits,
-    ids=[f"{doc.metadata['id']}_{i}" for i, doc in enumerate(all_splits)]
-)
+
+vector_store.add_documents(all_splits,ids=[f"{doc.metadata['id']}_{i}" for i, doc in enumerate(all_splits)])
 
 def search_documentation(query: str) -> str:
     retrieved_docs = vector_store.similarity_search(query, k=4)
@@ -91,6 +91,7 @@ system_prompt = (
     "{input}"
 )
 
+
 prompt = ChatPromptTemplate.from_messages([
     ("system", system_prompt),
     ("human", "{input}"),
@@ -105,27 +106,81 @@ def format_docs(docs):
         print(f"ID: {doc.id}")
         print(f"Metadata: {doc.metadata}")
         print(f"Content:\n{doc.page_content}")
-    return "\n\n".join(
-        doc.page_content if hasattr(doc, "page_content") else str(doc)
-        for doc in docs
+    return "\n\n".join(doc.page_content if hasattr(doc, "page_content") else str(doc) for doc in docs)
+
+def count_tokens(messages):
+    return sum(
+        len(message.content) // 4
+        for message in messages
+        if isinstance(message.content, str)
     )
 
-from operator import itemgetter
+def trim_conversation(messages):
+    print("Before")
+    print(messages)
+    response = trim_messages(
+        messages,
+        max_tokens=6000,
+        strategy="last",
+        token_counter=count_tokens,
+        include_system=True,
+        allow_partial=False,
+        start_on="human",
+        end_on=("human", "tool"),
+    )
+
+    print("After")
+    print(response)
+
+    return response
+
+def get_latest_question(messages): 
+    for message in reversed(messages): 
+        if isinstance(message, HumanMessage): 
+            return message.content 
+        raise ValueError("No human message found")
+
+def retrieve_documents(messages):
+    question = get_latest_question(messages)
+    return retriever.invoke(question)
 
 rag_chain = (
     {
-        "context": itemgetter("input") | retriever | format_docs,
-        "input": itemgetter("input"),
+        "messages": itemgetter("messages") | RunnableLambda(trim_conversation),
+        "context": itemgetter("messages") | RunnableLambda(retrieve_documents) | RunnableLambda(format_docs),
     }
     | prompt
     | model
     | StrOutputParser()
 )
 
-response = rag_chain.invoke({"input": "give the code RAG using langchain LCEL"})
-print(response)
+conversation = []
 
-print("-" * 60)
 
-response = rag_chain.invoke({"input": "give the TODO List code in react"})
-print(response)
+def ask(question: str):
+    global conversation
+    conversation.append(HumanMessage(content=question))
+    response = rag_chain.invoke({"messages": conversation})
+    conversation.append(AIMessage(content=response))
+    return response
+
+print("Model Initialized")
+
+while True:
+    question = input("You: ").strip()
+    if question.lower() in {"exit", "quit", "q"}:
+        print("Exit")
+        break
+
+    if not question:
+        continue
+
+    try:
+        response = ask(question)
+        print("\nAI:")
+        print(response)
+        print("-" * 60)
+
+    except Exception as e:
+        print(f"\nError: {e}")
+        print("-" * 60)
