@@ -14,24 +14,36 @@ print(f"Embedding shape: {embeddings.shape}")
 
 print("Embeddings saved to embeddings.npy")
 
+
 def numpy_search(query, top_k=5):
-    query_embedding = model.encode(query, convert_to_numpy=True, normalize_embeddings=True)
+    query_embedding = model.encode(
+        query, convert_to_numpy=True, normalize_embeddings=True
+    )
     scores = embeddings @ query_embedding
     top_indices = np.argsort(scores)[::-1][:top_k]
     return [(index, corpus[index], scores[index]) for index in top_indices]
 
+
 def library_search(query, top_k=5):
-    query_embedding = model.encode(query, convert_to_tensor=True, normalize_embeddings=True)
-    corpus_embeddings = util.normalize_embeddings(model.encode(corpus, convert_to_tensor=True))
+    query_embedding = model.encode(
+        query, convert_to_tensor=True, normalize_embeddings=True
+    )
+    corpus_embeddings = util.normalize_embeddings(
+        model.encode(corpus, convert_to_tensor=True)
+    )
     results = util.semantic_search(query_embedding, corpus_embeddings, top_k=top_k)[0]
-    return [(result["corpus_id"], corpus[result["corpus_id"]], result["score"]) for result in results]
+    return [
+        (result["corpus_id"], corpus[result["corpus_id"]], result["score"])
+        for result in results
+    ]
+
 
 queries = [
     "How can I create an API with Python?",
     "How can I store information in a relational database?",
     "How does user authentication work?",
     "How can I search text based on meaning?",
-    "How can I improve application performance?"
+    "How can I improve application performance?",
 ]
 
 for query in queries:

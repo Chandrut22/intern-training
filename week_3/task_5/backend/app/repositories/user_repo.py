@@ -7,7 +7,6 @@ from app.models import User
 
 
 class UserRepository:
-
     def __init__(self, db: AsyncSession):
         self.db = db
 
@@ -16,11 +15,7 @@ class UserRepository:
         email: str,
     ) -> User | None:
 
-        result = await self.db.execute(
-            select(User).where(
-                User.email == email
-            )
-        )
+        result = await self.db.execute(select(User).where(User.email == email))
 
         return result.scalar_one_or_none()
 
@@ -29,11 +24,7 @@ class UserRepository:
         username: str,
     ) -> User | None:
 
-        result = await self.db.execute(
-            select(User).where(
-                User.username == username
-            )
-        )
+        result = await self.db.execute(select(User).where(User.username == username))
 
         return result.scalar_one_or_none()
 
@@ -42,11 +33,7 @@ class UserRepository:
         user_id: uuid.UUID,
     ) -> User | None:
 
-        result = await self.db.execute(
-            select(User).where(
-                User.id == user_id
-            )
-        )
+        result = await self.db.execute(select(User).where(User.id == user_id))
 
         return result.scalar_one_or_none()
 

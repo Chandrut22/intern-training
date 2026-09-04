@@ -24,10 +24,11 @@ def load_pdf_pages(file_path: str) -> list[Document]:
     return [
         Document(
             page_content=page.extract_text() or "",
-            metadata={"source": file_path, "page": i, "id":i+1},
+            metadata={"source": file_path, "page": i, "id": i + 1},
         )
         for i, page in enumerate(reader.pages)
     ]
+
 
 file_path = r"C:\Genworx\intern-training\week_4\practices\Document.pdf"
 docs = load_pdf_pages(file_path)
@@ -48,7 +49,7 @@ for i, chunk in enumerate(all_splits[:5]):
 embeddings = OpenAIEmbeddings(
     model="openai/text-embedding-3-small",  # Your Azure deployment name
     base_url="https://openrouter.ai/api/v1",
-    api_key=os.getenv("OPEN_ROUTER_KEY")
+    api_key=os.getenv("OPEN_ROUTER_KEY"),
 )
 
 vector_store = PGVector(
@@ -56,15 +57,19 @@ vector_store = PGVector(
     collection_name="langchain_docs",
     connection=os.getenv("DATABASE_URL"),
     use_jsonb=True,
-    pre_delete_collection=True
+    pre_delete_collection=True,
 )
 
 
-vector_store.add_documents(all_splits,ids=[f"{doc.metadata['id']}_{i}" for i, doc in enumerate(all_splits)])
+vector_store.add_documents(
+    all_splits, ids=[f"{doc.metadata['id']}_{i}" for i, doc in enumerate(all_splits)]
+)
+
 
 def search_documentation(query: str) -> str:
     retrieved_docs = vector_store.similarity_search(query, k=4)
     return retrieved_docs
+
 
 retriever = vector_store.as_retriever()
 
@@ -92,12 +97,15 @@ system_prompt = (
 )
 
 
-prompt = ChatPromptTemplate.from_messages([
-    ("system", system_prompt),
-    ("human", "{input}"),
-])
+prompt = ChatPromptTemplate.from_messages(
+    [
+        ("system", system_prompt),
+        ("human", "{input}"),
+    ]
+)
 
 print("Model Initialized")
+
 
 def format_docs(docs):
     print(type(docs))
@@ -106,7 +114,10 @@ def format_docs(docs):
         print(f"ID: {doc.id}")
         print(f"Metadata: {doc.metadata}")
         print(f"Content:\n{doc.page_content}")
-    return "\n\n".join(doc.page_content if hasattr(doc, "page_content") else str(doc) for doc in docs)
+    return "\n\n".join(
+        doc.page_content if hasattr(doc, "page_content") else str(doc) for doc in docs
+    )
+
 
 def count_tokens(messages):
     return sum(
@@ -114,6 +125,7 @@ def count_tokens(messages):
         for message in messages
         if isinstance(message.content, str)
     )
+
 
 def trim_conversation(messages):
     print("Before")
@@ -134,20 +146,25 @@ def trim_conversation(messages):
 
     return response
 
-def get_latest_question(messages): 
-    for message in reversed(messages): 
-        if isinstance(message, HumanMessage): 
-            return message.content 
+
+def get_latest_question(messages):
+    for message in reversed(messages):
+        if isinstance(message, HumanMessage):
+            return message.content
         raise ValueError("No human message found")
+
 
 def retrieve_documents(messages):
     question = get_latest_question(messages)
     return retriever.invoke(question)
 
+
 rag_chain = (
     {
         "messages": itemgetter("messages") | RunnableLambda(trim_conversation),
-        "context": itemgetter("messages") | RunnableLambda(retrieve_documents) | RunnableLambda(format_docs),
+        "context": itemgetter("messages")
+        | RunnableLambda(retrieve_documents)
+        | RunnableLambda(format_docs),
     }
     | prompt
     | model
@@ -163,6 +180,7 @@ def ask(question: str):
     response = rag_chain.invoke({"messages": conversation})
     conversation.append(AIMessage(content=response))
     return response
+
 
 print("Model Initialized")
 

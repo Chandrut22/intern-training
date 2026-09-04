@@ -20,7 +20,6 @@ from app.services.email_service import EmailService
 
 
 class AuthService:
-
     def __init__(self, db: AsyncSession):
         self.db = db
         self.users = UserRepository(db)
@@ -29,9 +28,7 @@ class AuthService:
         self,
         data: CreateAccountRequest,
     ):
-        existing_email = await self.users.get_by_email(
-            data.email
-        )
+        existing_email = await self.users.get_by_email(data.email)
 
         if existing_email:
             raise HTTPException(
@@ -39,9 +36,7 @@ class AuthService:
                 detail="Email already registered",
             )
 
-        existing_username = await self.users.get_by_username(
-            data.username
-        )
+        existing_username = await self.users.get_by_username(data.username)
 
         if existing_username:
             raise HTTPException(
@@ -83,13 +78,9 @@ class AuthService:
                 detail="Invalid email or password",
             )
 
-        access_token = JWTService.create_access_token(
-            user.id, user.role
-        )
+        access_token = JWTService.create_access_token(user.id, user.role)
 
-        refresh_token = JWTService.create_refresh_token(
-            user.id
-        )
+        refresh_token = JWTService.create_refresh_token(user.id)
 
         return {
             "access_token": access_token,
@@ -102,9 +93,7 @@ class AuthService:
         refresh_token: str,
     ):
         try:
-            payload = JWTService.decode_token(
-                refresh_token
-            )
+            payload = JWTService.decode_token(refresh_token)
         except ValueError as exc:
             raise HTTPException(
                 status_code=status.HTTP_401_UNAUTHORIZED,
@@ -144,9 +133,7 @@ class AuthService:
                 detail="User not found",
             )
 
-        access_token = JWTService.create_access_token(
-            user.id, user.role
-        )
+        access_token = JWTService.create_access_token(user.id, user.role)
 
         return {
             "access_token": access_token,

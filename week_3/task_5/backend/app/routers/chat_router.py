@@ -51,13 +51,9 @@ async def stream_chat(
                 message=data.message,
                 conversation_id=data.conversation_id,
             ):
-                yield (
-                    f"event: {event['type']}\n"
-                    f"data: {json.dumps(event)}\n\n"
-                )
+                yield (f"event: {event['type']}\ndata: {json.dumps(event)}\n\n")
 
         except Exception as exc:
-
             # HTTP status cannot be changed here because
             # StreamingResponse has already started.
 
@@ -86,6 +82,4 @@ async def list_conversations(
 ):
     service = ChatService()
 
-    return await service.get_conversations(
-        user_id=current_user.id
-    )
+    return await service.get_conversations(user_id=current_user.id)

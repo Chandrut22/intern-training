@@ -10,7 +10,6 @@ class ChatRequest(BaseModel):
 
 
 class ChatResponse(BaseModel):
-
     conversation_id: uuid.UUID
     message: str
 

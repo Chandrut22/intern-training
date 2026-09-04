@@ -5,7 +5,6 @@ from app.core.config import settings
 
 
 class EmailService:
-
     @staticmethod
     def send_otp_email(to_email: str, otp: str) -> None:
         subject = "Your password reset code"

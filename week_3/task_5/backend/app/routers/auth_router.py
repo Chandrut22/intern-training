@@ -74,15 +74,16 @@ async def login(
         key="refresh_token",
         value=tokens["refresh_token"],
         httponly=True,
-        secure=False,  
+        secure=False,
         samesite="lax",
-        max_age=(60* 60 * 24 * settings.REFRESH_TOKEN_EXPIRE_DAYS),
+        max_age=(60 * 60 * 24 * settings.REFRESH_TOKEN_EXPIRE_DAYS),
     )
 
     return {
         "access_token": tokens["access_token"],
         "token_type": tokens["token_type"],
     }
+
 
 @router.post(
     "/refresh",
@@ -95,9 +96,7 @@ async def refresh_access_token(
         Depends(get_db),
     ],
 ):
-    refresh_token = request.cookies.get(
-        "refresh_token"
-    )
+    refresh_token = request.cookies.get("refresh_token")
 
     if not refresh_token:
         raise HTTPException(
@@ -107,9 +106,7 @@ async def refresh_access_token(
 
     service = AuthService(db)
 
-    return await service.refresh_access_token(
-        refresh_token
-    )
+    return await service.refresh_access_token(refresh_token)
 
 
 @router.post(

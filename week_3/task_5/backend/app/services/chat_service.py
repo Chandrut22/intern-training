@@ -12,7 +12,6 @@ from app.services.llm_service import LLMService
 
 
 class ChatService:
-
     def __init__(self):
         self.llm_service = LLMService()
 
@@ -28,12 +27,10 @@ class ChatService:
     ):
 
         async with SessionLocal() as db:
-
             conversations = ConversationRepository(db)
             messages = MessageRepository(db)
 
             try:
-
                 # ---------------------------------------------
                 # 1. Get existing conversation
                 # ---------------------------------------------
@@ -41,7 +38,6 @@ class ChatService:
                 conversation = None
 
                 if conversation_id is not None:
-
                     conversation = await conversations.get_by_id_for_user(
                         conversation_id, user_id
                     )
@@ -53,7 +49,6 @@ class ChatService:
                 # starting a new conversation instead of erroring.
 
                 if conversation is None:
-
                     conversation = await conversations.create(
                         user_id=user_id,
                         title=message[:100],
@@ -73,9 +68,7 @@ class ChatService:
                 # 4. Generate LLM response
                 # ---------------------------------------------
 
-                ai_message = await self.llm_service.generate(
-                    message
-                )
+                ai_message = await self.llm_service.generate(message)
 
                 usage = ai_message.usage_metadata or {}
 
@@ -128,12 +121,10 @@ class ChatService:
     ) -> AsyncGenerator[dict, None]:
 
         async with SessionLocal() as db:
-
             conversations = ConversationRepository(db)
             messages = MessageRepository(db)
 
             try:
-
                 # ---------------------------------------------
                 # 1. Get existing conversation
                 # ---------------------------------------------
@@ -141,7 +132,6 @@ class ChatService:
                 conversation = None
 
                 if conversation_id is not None:
-
                     conversation = await conversations.get_by_id_for_user(
                         conversation_id, user_id
                     )
@@ -153,7 +143,6 @@ class ChatService:
                 # starting a new conversation instead of erroring.
 
                 if conversation is None:
-
                     conversation = await conversations.create(
                         user_id=user_id,
                         title=message[:100],
@@ -175,9 +164,7 @@ class ChatService:
 
                 yield {
                     "type": "conversation",
-                    "conversation_id": str(
-                        conversation.id
-                    ),
+                    "conversation_id": str(conversation.id),
                 }
 
                 # ---------------------------------------------
@@ -186,10 +173,7 @@ class ChatService:
 
                 full_response: list[str] = []
 
-                async for chunk in self.llm_service.stream(
-                    message
-                ):
-
+                async for chunk in self.llm_service.stream(message):
                     if not chunk:
                         continue
 
@@ -197,9 +181,7 @@ class ChatService:
 
                     yield {
                         "type": "token",
-                        "conversation_id": str(
-                            conversation.id
-                        ),
+                        "conversation_id": str(conversation.id),
                         "content": chunk,
                     }
 
@@ -207,9 +189,7 @@ class ChatService:
                 # 6. Combine response
                 # ---------------------------------------------
 
-                assistant_content = "".join(
-                    full_response
-                )
+                assistant_content = "".join(full_response)
 
                 usage = self.llm_service.last_usage_metadata or {}
 
@@ -239,9 +219,7 @@ class ChatService:
 
                 yield {
                     "type": "done",
-                    "conversation_id": str(
-                        conversation.id
-                    ),
+                    "conversation_id": str(conversation.id),
                 }
 
             except Exception:
@@ -258,9 +236,6 @@ class ChatService:
     ) -> list[Conversation]:
 
         async with SessionLocal() as db:
-
             conversations = ConversationRepository(db)
 
-            return await conversations.list_for_user_with_messages(
-                user_id
-            )
+            return await conversations.list_for_user_with_messages(user_id)

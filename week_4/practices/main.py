@@ -47,9 +47,9 @@ def load_langchain_docs():
             continue
         source = f"{DOCS_BASE}/{path}"
         docs.append(
-            Document(page_content=response.text, metadata={"source": source,"id":i})
+            Document(page_content=response.text, metadata={"source": source, "id": i})
         )
-        i+=1
+        i += 1
     return docs
 
 
@@ -74,11 +74,13 @@ vector_store = PGVector(
     collection_name="langchain_docs",
     connection=os.getenv("DATABASE_URL"),
     use_jsonb=True,
-    pre_delete_collection=True
+    pre_delete_collection=True,
 )
 
 
-vector_store.add_documents(all_splits,ids=[f"{doc.metadata['id']}_{i}" for i, doc in enumerate(all_splits)])
+vector_store.add_documents(
+    all_splits, ids=[f"{doc.metadata['id']}_{i}" for i, doc in enumerate(all_splits)]
+)
 retriever = vector_store.as_retriever()
 
 model = init_chat_model(
@@ -95,31 +97,38 @@ system_prompt = (
     "{context}"
 )
 
-prompt = ChatPromptTemplate.from_messages([
-    ("system", system_prompt),
-    ("human", "{input}"),
-])
+prompt = ChatPromptTemplate.from_messages(
+    [
+        ("system", system_prompt),
+        ("human", "{input}"),
+    ]
+)
 
 print("Model Initialized")
 
-def format_docs(docs):
-    print(len(docs))
-    print(docs)
 
-    return "\n\n".join(doc.page_content if hasattr(doc, "page_content") else str(doc) for doc in docs)
+def format_docs(docs):
+    # print(len(docs))
+    # print(docs)
+    return "\n\n".join(
+        doc.page_content if hasattr(doc, "page_content") else str(doc) for doc in docs
+    )
 
 
 rag_chain = (
     {
-        "context": (lambda x: x["input"]) | retriever | format_docs, 
-        "input": RunnablePassthrough()
-    } | prompt | model | StrOutputParser())
+        "context": (lambda x: x["input"]) | retriever | format_docs,
+        "input": RunnablePassthrough(),
+    }
+    | prompt
+    | model
+    | StrOutputParser()
+)
 
 response = rag_chain.invoke({"input": "give the sample code RAG using langchain LCEL?"})
 print(response)
 
-print("-"*60)
+print("-" * 60)
 
 response = rag_chain.invoke({"input": "difference between the pandas and polars"})
 print(response)
-

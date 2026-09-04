@@ -13,6 +13,7 @@ load_dotenv()
 
 os.environ["OPENROUTER_API_KEY"] = os.getenv("OPEN_ROUTER_KEY")
 
+
 def load_pdf_pages(file_path: str) -> list[Document]:
     reader = pypdf.PdfReader(file_path)
     return [
@@ -23,14 +24,13 @@ def load_pdf_pages(file_path: str) -> list[Document]:
         for i, page in enumerate(reader.pages)
     ]
 
+
 file_path = r"C:\Genworx\intern-training\week_4\practices\Document.pdf"
 
 docs = load_pdf_pages(file_path)
 
 text_splitter = RecursiveCharacterTextSplitter(
-    chunk_size=1000,
-    chunk_overlap=200,
-    add_start_index=True
+    chunk_size=1000, chunk_overlap=200, add_start_index=True
 )
 
 all_splits = text_splitter.split_documents(docs)
@@ -46,7 +46,7 @@ for i, chunk in enumerate(all_splits[:5]):
 embeddings = OpenAIEmbeddings(
     model="openai/text-embedding-3-small",
     base_url="https://openrouter.ai/api/v1",
-    api_key=os.getenv("OPEN_ROUTER_KEY")
+    api_key=os.getenv("OPEN_ROUTER_KEY"),
 )
 
 vector_store = PGVector(
@@ -54,17 +54,18 @@ vector_store = PGVector(
     collection_name="langchain_docs",
     connection=os.getenv("DATABASE_URL"),
     use_jsonb=True,
-    pre_delete_collection=True
+    pre_delete_collection=True,
 )
 
 vector_store.add_documents(
-    all_splits,
-    ids=[f"{doc.metadata['id']}_{i}" for i, doc in enumerate(all_splits)]
+    all_splits, ids=[f"{doc.metadata['id']}_{i}" for i, doc in enumerate(all_splits)]
 )
+
 
 def search_documentation(query: str) -> str:
     retrieved_docs = vector_store.similarity_search(query, k=4)
     return retrieved_docs
+
 
 retriever = vector_store.as_retriever()
 
@@ -91,12 +92,15 @@ system_prompt = (
     "{input}"
 )
 
-prompt = ChatPromptTemplate.from_messages([
-    ("system", system_prompt),
-    ("human", "{input}"),
-])
+prompt = ChatPromptTemplate.from_messages(
+    [
+        ("system", system_prompt),
+        ("human", "{input}"),
+    ]
+)
 
 print("Model Initialized")
+
 
 def format_docs(docs):
     print(type(docs))
@@ -106,9 +110,9 @@ def format_docs(docs):
         print(f"Metadata: {doc.metadata}")
         print(f"Content:\n{doc.page_content}")
     return "\n\n".join(
-        doc.page_content if hasattr(doc, "page_content") else str(doc)
-        for doc in docs
+        doc.page_content if hasattr(doc, "page_content") else str(doc) for doc in docs
     )
+
 
 from operator import itemgetter
 

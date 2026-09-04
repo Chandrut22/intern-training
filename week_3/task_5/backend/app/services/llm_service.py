@@ -7,7 +7,6 @@ from app.core.config import settings
 
 
 class LLMService:
-
     def __init__(self):
 
         self.model_name = settings.MODELS_NAME[1]
@@ -33,13 +32,7 @@ class LLMService:
         message: str,
     ) -> AIMessage:
 
-        return await self.llm.ainvoke(
-            [
-                HumanMessage(
-                    content=message
-                )
-            ]
-        )
+        return await self.llm.ainvoke([HumanMessage(content=message)])
 
     # =========================================================
     # Streaming generation
@@ -53,17 +46,8 @@ class LLMService:
         self.last_usage_metadata = None
         full_message: AIMessage | None = None
 
-        async for chunk in self.llm.astream(
-            [
-                HumanMessage(
-                    content=message
-                )
-            ]
-        ):
-
-            full_message = (
-                chunk if full_message is None else full_message + chunk
-            )
+        async for chunk in self.llm.astream([HumanMessage(content=message)]):
+            full_message = chunk if full_message is None else full_message + chunk
 
             if chunk.content:
                 yield chunk.content

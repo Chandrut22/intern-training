@@ -8,7 +8,6 @@ from app.models import Conversation
 
 
 class ConversationRepository:
-
     def __init__(self, db: AsyncSession):
         self.db = db
 
@@ -59,8 +58,6 @@ class ConversationRepository:
         conversations = result.scalars().all()
 
         for conversation in conversations:
-            conversation.messages.sort(
-                key=lambda m: m.created_at
-            )
+            conversation.messages.sort(key=lambda m: m.created_at)
 
         return list(conversations)

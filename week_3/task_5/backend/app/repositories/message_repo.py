@@ -6,7 +6,6 @@ from app.models import Message
 
 
 class MessageRepository:
-
     def __init__(self, db: AsyncSession):
         self.db = db
 

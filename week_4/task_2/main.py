@@ -1,6 +1,11 @@
 import pypdf
 from langchain_core.documents import Document
-from langchain_text_splitters import CharacterTextSplitter,MarkdownHeaderTextSplitter,RecursiveCharacterTextSplitter
+from langchain_text_splitters import (
+    CharacterTextSplitter,
+    MarkdownHeaderTextSplitter,
+    RecursiveCharacterTextSplitter,
+)
+
 
 def load_pdf_pages(file_path: str) -> list[Document]:
     reader = pypdf.PdfReader(file_path)
@@ -11,6 +16,7 @@ def load_pdf_pages(file_path: str) -> list[Document]:
         )
         for i, page in enumerate(reader.pages)
     ]
+
 
 file_path = r"C:\Genworx\intern-training\week_4\task_2\document.pdf"
 docs = load_pdf_pages(file_path)
@@ -36,9 +42,7 @@ headers_to_split_on = [
     ("###", "Header 3"),
 ]
 
-markdown_splitter = MarkdownHeaderTextSplitter(
-    headers_to_split_on=headers_to_split_on
-)
+markdown_splitter = MarkdownHeaderTextSplitter(headers_to_split_on=headers_to_split_on)
 structure_splits = markdown_splitter.split_text(combined_text)
 
 stored_chunk_sets = {
@@ -63,7 +67,9 @@ def inspect_chunks(splits: list[Document], max_inspect: int = 50):
 
         lost_heading = not content.startswith(("#", "Item", "Section")) and i > 0
 
-        print(f"Chunk {i}: Mid-sentence={is_mid_sentence}, Furniture={is_furniture}, Lost Heading={lost_heading}")
+        print(
+            f"Chunk {i}: Mid-sentence={is_mid_sentence}, Furniture={is_furniture}, Lost Heading={lost_heading}"
+        )
 
 
 print("\nInspecting recursive splits:")

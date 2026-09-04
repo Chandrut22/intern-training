@@ -14,8 +14,9 @@ embeddings = GoogleGenerativeAIEmbeddings(model="models/gemini-embedding-001")
 vector_store = PGVector(
     embeddings=embeddings,
     collection_name="my_docs",
-    connection=os.getenv("DATABASE_URL")
+    connection=os.getenv("DATABASE_URL"),
 )
+
 
 def load_pdf_pages(file_path: str) -> list[Document]:
     reader = pypdf.PdfReader(file_path)
@@ -26,6 +27,7 @@ def load_pdf_pages(file_path: str) -> list[Document]:
         )
         for i, page in enumerate(reader.pages)
     ]
+
 
 file_path = r"C:\Genworx\intern-training\week_4\task_2\document.pdf"
 docs = load_pdf_pages(file_path)
@@ -46,16 +48,14 @@ print("Document is loaded successfully")
 
 
 vector_store.add_documents(
-    recursive_splits, 
-    ids=[f"{doc.metadata['id']}_{i}" for i, doc in enumerate(recursive_splits)]
+    recursive_splits,
+    ids=[f"{doc.metadata['id']}_{i}" for i, doc in enumerate(recursive_splits)],
 )
 
 # results = vector_store.similarity_search(
 #     "Open weight ?", k=10, filter={"id": {"$in": [1, 5, 2, 9]}}
 # )
 
-results = vector_store.similarity_search(
-    "what is Open weight ?", k=10
-)
+results = vector_store.similarity_search("what is Open weight ?", k=10)
 for doc in results:
     print(f"* {doc.page_content} [{doc.metadata}]")
